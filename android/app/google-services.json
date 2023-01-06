@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "244050365953",
+    "project_id": "mr-gharbeti",
+    "storage_bucket": "mr-gharbeti.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:244050365953:android:1744b1629772aa95167a00",
+        "android_client_info": {
+          "package_name": "com.example.mr_gharbeti"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "244050365953-85tvjunt2o1966b5iemc4m9d9dc85k5p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mr_gharbeti",
+            "certificate_hash": "80ab5775d7aa026053e7544ee9a33f3ec813ca0c"
+          }
+        },
+        {
+          "client_id": "244050365953-rqsc21qac1mbqd3cp9pi5use413qiog0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9b_PGSlhm6WTnxYeGinn3oZ9hQ5wC3HA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "244050365953-rqsc21qac1mbqd3cp9pi5use413qiog0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "244050365953-02trqs7ujv4dgu31373gd453c3l10ojk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.mrGharbeti"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
