@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
+import '../widgets/authentication/fire_auth.dart';
 import './update_profile.dart';
 import '../widgets/profile/profile_menu.dart';
 
@@ -125,7 +126,9 @@ class ProfileScreen extends StatelessWidget {
                 title: 'Logout',
                 icon: LineAwesomeIcons.alternate_sign_out,
                 textColor: Colors.red,
-                onPress: () {},
+                onPress: () {
+                  FireAuth.instance.logout();
+                },
               ),
               // ProfileMenuWidget(),
             ],

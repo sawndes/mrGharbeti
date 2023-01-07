@@ -1,6 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../models/user_model.dart';
+import '../../widgets/firestore/user_firestore.dart';
+import '../../screens/otp_screen.dart';
 import './fire_auth.dart';
 
 class SignUpController extends GetxController {
@@ -11,6 +13,8 @@ class SignUpController extends GetxController {
   final phoneNo = TextEditingController();
   // var FireAuth;
 
+  final userRepo = Get.put(UserRepository());
+
   void registerUser(String email, String password) {
     // print('object');
     FireAuth.instance.createUserWithEmailAndPassword(email, password);
@@ -20,5 +24,11 @@ class SignUpController extends GetxController {
 
   void phoneAuthentication(String phoneNo) {
     FireAuth.instance.phoneAuthentication(phoneNo);
+  }
+
+  Future<void> createUser(UserModel user) async {
+    await userRepo.createUser(user);
+    phoneAuthentication(user.phoneNo);
+    Get.to(() => const OTPScreen());
   }
 }

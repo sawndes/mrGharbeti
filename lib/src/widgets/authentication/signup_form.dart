@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mr_gharbeti/src/models/user_model.dart';
 import '../../screens/otp_screen.dart';
 import './signup_controller.dart';
 
@@ -87,9 +88,18 @@ class SignUpForm extends StatelessWidget {
                         //   controller.email.text.trim(),
                         //   controller.password.text.trim(),
                         // );
-                        SignUpController.instance.phoneAuthentication(
-                            controller.phoneNo.text.trim());
-                        Get.to(() => const OTPScreen());
+
+                        // SignUpController.instance.phoneAuthentication(
+                        //     controller.phoneNo.text.trim());
+                        // Get.to(() => const OTPScreen());
+
+                        final user = UserModel(
+                          fullName: controller.fullName.text.trim(),
+                          email: controller.email.text.trim(),
+                          phoneNo: controller.phoneNo.text.trim(),
+                          password: controller.password.text.trim(),
+                        );
+                        SignUpController.instance.createUser(user);
                       }
                     },
                     child: const Text('SIGNUP'),

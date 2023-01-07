@@ -34,8 +34,11 @@ class DashboardBannerUI extends StatelessWidget {
                   children: const [
                     Flexible(child: Icon(Icons.bookmark_border)),
                     Flexible(
-                        child: Image(
-                            image: AssetImage('assets/images/login_ui.png'))),
+                        child:
+                            // Icon(Icons.house)
+                            Image(
+                                image:
+                                    AssetImage('assets/images/login_ui.png'))),
                   ],
                 ),
                 const SizedBox(height: 25),

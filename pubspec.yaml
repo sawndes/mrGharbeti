@@ -69,6 +69,10 @@ flutter:
     - assets/images/login_ui.png
     - assets/images/googlelogo.png
     - assets/images/forgot_password.png
+    - assets/images/house1.jpg
+    - assets/images/house2.jpg
+
+
 
   #   - images/a_dot_ham.jpeg
 
