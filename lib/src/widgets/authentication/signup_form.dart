@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mr_gharbeti/src/models/user_model.dart';
 import '../../screens/otp_screen.dart';
 import './signup_controller.dart';
+// import 'package:lottie/lottie.dart';
 
 class SignUpForm extends StatelessWidget {
   const SignUpForm({Key? key}) : super(key: key);
@@ -21,10 +22,11 @@ class SignUpForm extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Image.asset(
-          'assets/images/login_ui.png',
-          height: size.height * 0.20,
-        ),
+        // Lottie.asset(),
+        // Image.asset(
+        //   'assets/animations/register_animation.json',
+        //   height: size.height * 0.20,
+        // ),
         Text(
           "Register your Account,",
           style: Theme.of(context).textTheme.headline1,
@@ -70,6 +72,7 @@ class SignUpForm extends StatelessWidget {
                   height: 6,
                 ),
                 TextFormField(
+                  obscureText: true,
                   controller: controller.password,
                   decoration: const InputDecoration(
                     label: Text('Password'),
