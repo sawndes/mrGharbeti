@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mr_gharbeti/firebase_options.dart';
+import 'package:mr_gharbeti/src/controller/all_listings_bookmark_controller.dart';
 import 'package:mr_gharbeti/src/controller/bookmark_clicked_controller.dart';
 
 import './src/widgets/authentication/fire_auth.dart';
@@ -19,7 +20,8 @@ void main() async {
 class MyApp extends StatelessWidget {
   BookmarkClickedController bookmarkClickedController =
       Get.put(BookmarkClickedController());
-
+  AllListingsBookmarkController allListingsBookmarkController =
+      Get.put(AllListingsBookmarkController());
   MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.

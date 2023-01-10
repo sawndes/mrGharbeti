@@ -29,12 +29,12 @@ class ProfileScreen extends StatelessWidget {
           style: Theme.of(context).textTheme.headline4,
         ),
         actions: [
-          IconButton(
-              onPressed: () {},
-              icon: Icon(
-                isDark ? LineAwesomeIcons.sun : LineAwesomeIcons.moon,
-                color: Colors.black,
-              ))
+          // IconButton(
+          //     onPressed: () {},
+          //     icon: Icon(
+          //       isDark ? LineAwesomeIcons.sun : LineAwesomeIcons.moon,
+          //       color: Colors.black,
+          //     ))
         ],
       ),
       body: SingleChildScrollView(

@@ -1,24 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'package:mr_gharbeti/src/controller/all_listings_bookmark_controller.dart';
+import 'package:mr_gharbeti/src/controller/bookmark_clicked_controller.dart';
 import '../../controller/bookmark_clicked_controller.dart';
+import '../../models/all_listings_model.dart';
 import '../../models/top_listings_model.dart';
 
-class DashboardTopListings extends StatelessWidget {
+class DashboardTopListings extends StatefulWidget {
   DashboardTopListings({Key? key, required this.textTheme}) : super(key: key);
   final TextTheme textTheme;
-  BookmarkClickedController bookmarkClickedController = Get.find();
+
+  @override
+  State<DashboardTopListings> createState() => _DashboardTopListingsState();
+}
+
+class _DashboardTopListingsState extends State<DashboardTopListings> {
+  // BookmarkClickedController bookmarkClickedController = Get.find();
+  AllListingsBookmarkController allListingsBookmarkController = Get.find();
+
   @override
   Widget build(BuildContext context) {
     var brightness = MediaQuery.of(context).platformBrightness;
     final isDark = brightness == Brightness.dark;
-    final list = DashboardTopListingsModel.list;
+    // final list = DashboardTopListingsModel.list;
+    // var BookmarkiconBool = Obx((() => bookmarkClickedController.);
+    final list = AllListingsModel.list;
+
     return SizedBox(
       height: 200,
       child: ListView.builder(
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
-        itemCount: list.length,
+        itemCount: 3,
         itemBuilder: (context, index) => GestureDetector(
           onTap: list[index].onPress,
           child: SizedBox(
@@ -42,7 +56,7 @@ class DashboardTopListings extends StatelessWidget {
                         Flexible(
                           child: Text(
                             list[index].title,
-                            style: textTheme.headline4,
+                            style: widget.textTheme.headline4,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -56,27 +70,47 @@ class DashboardTopListings extends StatelessWidget {
                     Row(
                       children: [
                         ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            shape: const CircleBorder(),
-                          ),
-                          onPressed: () {
-                            print('object');
-                            bookmarkClickedController.addBookmark(list[index]);
-                          },
-                          child: const Icon(Icons.view_agenda_outlined),
-                        ),
+                            style: ElevatedButton.styleFrom(
+                              shape: const CircleBorder(),
+                            ),
+                            onPressed: () {
+                              // print('object');
+                              // setState(() {
+                              allListingsBookmarkController
+                                  .addBookmark(list[index]);
+                              // });
+                            },
+                            // child: Obx(() =>
+                            //     Icon(bookmarkClickedController.icon.value))
+                            // list[index].favorite == true
+                            //     ? Obx(() =>
+                            //         Icon(bookmarkClickedController.icon.value))
+                            //     : Icon(Icons.bookmark_border_outlined)
+
+                            child: Obx(
+                              () => allListingsBookmarkController
+                                      .listFavBool.value
+                                  ? Icon(Icons.bookmark)
+                                  : Icon(Icons.bookmark_border_outlined),
+                            )
+
+                            // child: list[index].favorite
+                            //     ? Icon(Icons.bookmark)
+                            //     : Icon(Icons.bookmark_border_outlined)
+                            // child: Icon(bookmarkClickedController.icon.value),
+                            ),
                         const SizedBox(width: 20),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               list[index].heading,
-                              style: textTheme.headline4,
+                              style: widget.textTheme.headline4,
                               overflow: TextOverflow.ellipsis,
                             ),
                             Text(
                               list[index].subheading,
-                              style: textTheme.bodyText2,
+                              style: widget.textTheme.bodyText2,
                               overflow: TextOverflow.ellipsis,
                             ),
                           ],

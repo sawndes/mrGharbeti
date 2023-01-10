@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:get/get.dart';
 
+import '../controller/all_listings_bookmark_controller.dart';
 import '../controller/bookmark_clicked_controller.dart';
 
-class BookmarkListings extends StatelessWidget {
+class BookmarkListings extends StatefulWidget {
   BookmarkListings({super.key});
-  BookmarkClickedController bookmarkClickedController = Get.find();
+
+  @override
+  State<BookmarkListings> createState() => _BookmarkListingsState();
+}
+
+class _BookmarkListingsState extends State<BookmarkListings> {
+  // BookmarkClickedController bookmarkClickedController = Get.find();
+  AllListingsBookmarkController allListingsBookmarkController = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    final list = bookmarkClickedController.favList;
+    final list = allListingsBookmarkController.favList;
     return Scaffold(
         body: Obx(
       () => SingleChildScrollView(
@@ -33,10 +40,15 @@ class BookmarkListings extends StatelessWidget {
                                 Text(list[index].title),
                                 ElevatedButton(
                                     onPressed: () {
-                                      bookmarkClickedController
-                                          .removeBookmark(list[index]);
+                                      setState(() {
+                                        allListingsBookmarkController
+                                            .removeBookmark(list[index]);
+                                      });
+
+                                      // AllListingsBookmarkController
+                                      //     .removeBookmark(list[index]);
                                     },
-                                    child: Text('Remove '))
+                                    child: Text('Remove'))
                               ],
                             )
                           ],

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:mr_gharbeti/src/screens/all_listings.dart';
 
 class DashboardBannerUI extends StatelessWidget {
   const DashboardBannerUI({
@@ -18,6 +20,15 @@ class DashboardBannerUI extends StatelessWidget {
       children: [
         //1st banner
         Expanded(
+          // child: Container(
+          // color: Colors.black.withOpacity(0.0),
+          // child: Material(
+          // color: Colors.white.withOpacity(0.0),
+          // child: InkWell(
+          // onTap: () {
+          // print("Wow! Ripple");
+          // },
+          // child: Expanded(
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
@@ -25,49 +36,41 @@ class DashboardBannerUI extends StatelessWidget {
               color: isDark ? Color(0xFF272727) : Color(0xFFF7F6F1),
             ),
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
+            child: Material(
+              color: Color(0xFFF7F6F1),
+              child: InkWell(
+                onTap: () {
+                  print("Wow! Ripple");
+                },
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Flexible(
-                      child: InkWell(
-                        onTap: () {
-                          print('clicked');
-                        },
-                        child: Icon(Icons.bookmark_border),
-                      ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: const [
+                        Flexible(
+                          child:
+                              // Icon(Icons.house)
+                              Image(
+                            image: AssetImage('assets/images/login_ui.png'),
+                          ),
+                        ),
+                      ],
                     ),
-                    // ElevatedButton.icon(
-                    //   style: ButtonStyle(
-                    //     backgroundColor: Colors.white
-                    //   ),
-                    //     onPressed: () {},
-                    //     icon: Icon(
-                    //       Icons.bookmark_border,
-                    //       size: 10,
-                    //     ),
-                    //     label: Text('')),
-                    const Flexible(
-                        child:
-                            // Icon(Icons.house)
-                            Image(
-                                image:
-                                    AssetImage('assets/images/login_ui.png'))),
+                    const SizedBox(height: 25),
+                    Text('Manage your tenants here',
+                        style: textTheme.headline4,
+                        maxLines: 2,
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis),
+                    // Text('Naxal-8, Kathmandu',
+                    //     style: textTheme.bodyText2,
+                    //     maxLines: 1,
+                    //     overflow: TextOverflow.ellipsis),
                   ],
                 ),
-                const SizedBox(height: 25),
-                Text('1 BHK Room',
-                    style: textTheme.headline4,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis),
-                Text('Naxal-8, Kathmandu',
-                    style: textTheme.bodyText2,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis),
-              ],
+              ),
             ),
           ),
         ),
@@ -84,7 +87,7 @@ class DashboardBannerUI extends StatelessWidget {
                   color: isDark ? Color(0xFF272727) : Color(0xFFF7F6F1),
                 ),
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -92,7 +95,7 @@ class DashboardBannerUI extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: const [
-                        Flexible(child: Icon(Icons.bookmark_border)),
+                        // Flexible(child: Icon(Icons.bookmark_border)),
                         Flexible(
                             child: Image(
                                 image:
@@ -111,10 +114,17 @@ class DashboardBannerUI extends StatelessWidget {
               const SizedBox(height: 5),
               SizedBox(
                 width: double.infinity,
+                height: 50,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: OutlinedButton(
-                      onPressed: () {}, child: const Text('View All')),
+                    onPressed: () {
+                      Get.to(() => AllListings(
+                            textTheme: textTheme,
+                          ));
+                    },
+                    child: const Text('View All Listings'),
+                  ),
                 ),
               ),
             ],
