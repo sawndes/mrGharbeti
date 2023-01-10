@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:mr_gharbeti/src/screens/navigation_bar.dart';
 
 import '../../screens/dashboard.dart';
 import '../../screens/home_screen.dart';
@@ -24,7 +25,7 @@ class FireAuth extends GetxController {
   _setInitialScreen(User? user) {
     user == null
         ? Get.offAll(() => const HomeScreen())
-        : Get.offAll(() => DashBoard(
+        : Get.offAll(() => NavigationPage(
             // user: user,
             ));
   }
@@ -60,7 +61,7 @@ class FireAuth extends GetxController {
 
   void check(String otp) async {
     var isVerified = await FireAuth.instance.verifyOTP(otp);
-    isVerified ? Get.off(DashBoard()) : Get.back();
+    isVerified ? Get.off(NavigationPage()) : Get.back();
   }
 
   Future<void> createUserWithEmailAndPassword(
@@ -71,7 +72,7 @@ class FireAuth extends GetxController {
         password: password,
       );
       firebaseUser.value != null
-          ? Get.offAll(() => DashBoard())
+          ? Get.offAll(() => NavigationPage())
           : Get.to(() => const HomeScreen());
     } on FirebaseAuthException catch (e) {
       final ex = SignUpWithEmailAndPasswordFailure.code(e.code);

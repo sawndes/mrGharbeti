@@ -31,9 +31,26 @@ class DashboardBannerUI extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Flexible(child: Icon(Icons.bookmark_border)),
+                  children: [
                     Flexible(
+                      child: InkWell(
+                        onTap: () {
+                          print('clicked');
+                        },
+                        child: Icon(Icons.bookmark_border),
+                      ),
+                    ),
+                    // ElevatedButton.icon(
+                    //   style: ButtonStyle(
+                    //     backgroundColor: Colors.white
+                    //   ),
+                    //     onPressed: () {},
+                    //     icon: Icon(
+                    //       Icons.bookmark_border,
+                    //       size: 10,
+                    //     ),
+                    //     label: Text('')),
+                    const Flexible(
                         child:
                             // Icon(Icons.house)
                             Image(

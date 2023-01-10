@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../../controller/bookmark_clicked_controller.dart';
 import '../../models/top_listings_model.dart';
 
 class DashboardTopListings extends StatelessWidget {
-  const DashboardTopListings({Key? key, required this.textTheme})
-      : super(key: key);
+  DashboardTopListings({Key? key, required this.textTheme}) : super(key: key);
   final TextTheme textTheme;
+  BookmarkClickedController bookmarkClickedController = Get.find();
   @override
   Widget build(BuildContext context) {
     var brightness = MediaQuery.of(context).platformBrightness;
@@ -55,8 +57,12 @@ class DashboardTopListings extends StatelessWidget {
                       children: [
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              shape: const CircleBorder()),
-                          onPressed: () {},
+                            shape: const CircleBorder(),
+                          ),
+                          onPressed: () {
+                            print('object');
+                            bookmarkClickedController.addBookmark(list[index]);
+                          },
                           child: const Icon(Icons.view_agenda_outlined),
                         ),
                         const SizedBox(width: 20),

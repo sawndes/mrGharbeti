@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../widgets/dashboard_widgets/categories_ui.dart';
 import '../widgets/dashboard_widgets/appBar_ui.dart';
 
-import '../widgets/authentication/fire_auth.dart';
 import '../widgets/dashboard_widgets/banner_ui.dart';
 import '../widgets/dashboard_widgets/searchBar_ui.dart';
 import '../widgets/dashboard_widgets/top_listings_ui.dart';

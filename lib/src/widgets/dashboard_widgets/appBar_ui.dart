@@ -17,12 +17,12 @@ class AppBarUI extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       centerTitle: true,
       backgroundColor: Colors.transparent,
-      leading: Icon(
-        Icons.menu,
-        //For Dark Color
-        color: isDark ? Colors.white : const Color(0xff000000),
-      ),
-      title: Text('Mr. Gharbeti', style: Theme.of(context).textTheme.headline4),
+      // leading: Icon(
+      //   Icons.menu,
+      //   //For Dark Color
+      //   color: isDark ? Colors.white : const Color(0xff000000),
+      // ),
+      title: Text('Mr. Gharbeti', style: Theme.of(context).textTheme.headline2),
       actions: [
         Container(
           margin: const EdgeInsets.only(right: 20, top: 7),
