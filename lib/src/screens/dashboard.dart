@@ -38,9 +38,9 @@ class DashBoard extends StatelessWidget {
               // DashBoardCategories(
               //   textTheme: textTheme,
               // ),
-              const SizedBox(
-                height: 10,
-              ),
+              // const SizedBox(
+              //   height: 10,
+              // ),
               //Banner
               DashboardBannerUI(textTheme: textTheme),
               const SizedBox(

@@ -39,5 +39,14 @@ class AllListingsModel {
       null,
       false,
     ),
+    AllListingsModel(
+      'House4',
+      'See Houses',
+      'ss',
+      'sads',
+      'assets/images/house2.jpg',
+      null,
+      false,
+    ),
   ];
 }
