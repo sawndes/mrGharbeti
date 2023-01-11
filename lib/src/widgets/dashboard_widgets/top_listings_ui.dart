@@ -8,7 +8,8 @@ import '../../models/all_listings_model.dart';
 import '../../models/top_listings_model.dart';
 
 class DashboardTopListings extends StatefulWidget {
-  DashboardTopListings({Key? key, required this.textTheme}) : super(key: key);
+  const DashboardTopListings({Key? key, required this.textTheme})
+      : super(key: key);
   final TextTheme textTheme;
 
   @override
@@ -18,6 +19,12 @@ class DashboardTopListings extends StatefulWidget {
 class _DashboardTopListingsState extends State<DashboardTopListings> {
   // BookmarkClickedController bookmarkClickedController = Get.find();
   AllListingsBookmarkController allListingsBookmarkController = Get.find();
+
+  // void checker(List list, int index) {
+  //   list[index].favorite
+  //       ? Icon(Icons.bookmark)
+  //       : Icon(Icons.bookmark_border_outlined);
+  // }
 
   @override
   Widget build(BuildContext context) {

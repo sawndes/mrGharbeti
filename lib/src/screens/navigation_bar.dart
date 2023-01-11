@@ -16,10 +16,10 @@ class NavigationPage extends StatelessWidget {
   NavigationPage({Key? key}) : super(key: key);
 
   final screens = [
-    DashBoard(),
-    ChatPage(),
-    AddListingsPage(),
-    BookmarkListings(),
+    const DashBoard(),
+    const ChatPage(),
+    const AddListingsPage(),
+    const BookmarkListings(),
   ];
 
   @override

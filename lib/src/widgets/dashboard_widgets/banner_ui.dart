@@ -33,11 +33,11 @@ class DashboardBannerUI extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               //For Dark Color
-              color: isDark ? Color(0xFF272727) : Color(0xFFF7F6F1),
+              color: isDark ? const Color(0xFF272727) : const Color(0xFFF7F6F1),
             ),
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
             child: Material(
-              color: Color(0xFFF7F6F1),
+              color: const Color(0xFFF7F6F1),
               child: InkWell(
                 onTap: () {
                   print("Wow! Ripple");

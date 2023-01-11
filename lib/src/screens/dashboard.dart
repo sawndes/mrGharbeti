@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../widgets/dashboard_widgets/categories_ui.dart';
 import '../widgets/dashboard_widgets/appBar_ui.dart';
 
 import '../widgets/dashboard_widgets/banner_ui.dart';
