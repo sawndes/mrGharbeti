@@ -12,7 +12,7 @@ class DashBoard extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      appBar: AppBarUI(false),
+      appBar: AppBarUI('Mr. Gharbeti', false),
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.all(20),

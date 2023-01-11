@@ -7,7 +7,8 @@ import '../authentication/fire_auth.dart';
 
 class AppBarUI extends StatelessWidget implements PreferredSizeWidget {
   // const AppBarUI({Key? key}) : super(key: key);
-  AppBarUI(this.backButton);
+  AppBarUI(this.Titletext, this.backButton);
+  String Titletext;
   bool backButton;
 
   @override
@@ -33,8 +34,7 @@ class AppBarUI extends StatelessWidget implements PreferredSizeWidget {
         //   //For Dark Color
         //   color: isDark ? Colors.white : const Color(0xff000000),
         // ),
-        title:
-            Text('Mr. Gharbeti', style: Theme.of(context).textTheme.headline2),
+        title: Text(Titletext, style: Theme.of(context).textTheme.headline2),
         actions: [
           Container(
             margin: const EdgeInsets.only(right: 20, top: 7),
@@ -70,8 +70,7 @@ class AppBarUI extends StatelessWidget implements PreferredSizeWidget {
         //   //For Dark Color
         //   color: isDark ? Colors.white : const Color(0xff000000),
         // ),
-        title:
-            Text('Mr. Gharbeti', style: Theme.of(context).textTheme.headline2),
+        title: Text(Titletext, style: Theme.of(context).textTheme.headline2),
         actions: [
           Container(
             margin: const EdgeInsets.only(right: 20, top: 7),
