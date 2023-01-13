@@ -53,7 +53,7 @@ class NavigationPage extends StatelessWidget {
           //     Colors.purple.withOpacity(0.1), // selected tab background color
           onTabChange: (index) {
             // print('object');
-            allListingsBookmarkController.updateAll();
+            // allListingsBookmarkController.updateAll();
             bottomNavigationController.changeIndex(index);
           },
           tabs: const [

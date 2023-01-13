@@ -9,20 +9,21 @@ class AllListingsBookmarkController extends GetxController {
   var favList = <AllListingsModel>[].obs;
   var listFavBool = false.obs;
 
-  void updateAll() {
-    listFavBool.obs;
-    // print('object');
-    print(listFavBool);
-    update();
+  bool getFav(AllListingsModel list) {
+    print(list.favorite);
+    return list.favorite;
   }
 
   void addBookmark(AllListingsModel list) {
     list.favorite = true;
-    listFavBool.value = true;
     update();
+    // listFavBool.value = true;
+    // update();
 
     if (!favList.contains(list)) {
       favList.add(list);
+      list.favorite = true;
+      update();
       // print(listFavBool.value);
       // icon = Icons.bookmark;
       // Icons.abc = icon;

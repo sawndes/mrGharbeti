@@ -4,19 +4,13 @@ import 'package:mr_gharbeti/src/controller/all_listings_bookmark_controller.dart
 import 'package:mr_gharbeti/src/models/all_listings_model.dart';
 import 'package:mr_gharbeti/src/screens/listing_details.dart';
 
-import '../controller/bookmark_clicked_controller.dart';
 import '../widgets/dashboard_widgets/appBar_ui.dart';
 import '../widgets/dashboard_widgets/searchBar_ui.dart';
 
-class AllListings extends StatefulWidget {
+class AllListings extends StatelessWidget {
   const AllListings({Key? key, required this.textTheme}) : super(key: key);
   final TextTheme textTheme;
 
-  @override
-  State<AllListings> createState() => _AllListingsState();
-}
-
-class _AllListingsState extends State<AllListings> {
   @override
   Widget build(BuildContext context) {
     AllListingsBookmarkController allListingsBookmarkController = Get.find();
@@ -78,7 +72,7 @@ class _AllListingsState extends State<AllListings> {
                                 Flexible(
                                   child: Text(
                                     list[index].title,
-                                    style: widget.textTheme.headline4,
+                                    style: textTheme.headline4,
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -97,26 +91,38 @@ class _AllListingsState extends State<AllListings> {
                                     ),
                                     onPressed: () {
                                       // print('object');
-                                      setState(() {
-                                        allListingsBookmarkController
-                                            .addBookmark(list[index]);
-                                      });
+                                      // setState(() {
+                                      allListingsBookmarkController
+                                          .addBookmark(list[index]);
+                                      // });
                                     },
-                                    child: list[index].favorite
-                                        ? Icon(Icons.bookmark)
-                                        : Icon(Icons.bookmark_border_outlined)),
+                                    child: GetBuilder<
+                                            AllListingsBookmarkController>(
+                                        builder: (_) =>
+                                            allListingsBookmarkController
+                                                    .getFav(list[index])
+                                                ? const Icon(Icons.bookmark)
+                                                : const Icon(Icons
+                                                    .bookmark_border_outlined))
+                                    // child: Obx(
+                                    //   () => allListingsBookmarkController
+                                    //           .listFavBool.value
+                                    //       ? const Icon(Icons.bookmark)
+                                    //       : const Icon(
+                                    //           Icons.bookmark_border_outlined)),
+                                    ),
                                 const SizedBox(width: 20),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
                                       list[index].heading,
-                                      style: widget.textTheme.headline4,
+                                      style: textTheme.headline4,
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                     Text(
                                       list[index].subheading,
-                                      style: widget.textTheme.bodyText2,
+                                      style: textTheme.bodyText2,
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                   ],

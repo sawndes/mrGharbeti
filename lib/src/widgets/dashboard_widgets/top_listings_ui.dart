@@ -3,18 +3,12 @@ import 'package:get/get.dart';
 
 import 'package:mr_gharbeti/src/controller/all_listings_bookmark_controller.dart';
 import '../../models/all_listings_model.dart';
-import '../../models/top_listings_model.dart';
 
-class DashboardTopListings extends StatefulWidget {
+class DashboardTopListings extends StatelessWidget {
   const DashboardTopListings({Key? key, required this.textTheme})
       : super(key: key);
   final TextTheme textTheme;
 
-  @override
-  State<DashboardTopListings> createState() => _DashboardTopListingsState();
-}
-
-class _DashboardTopListingsState extends State<DashboardTopListings> {
   // BookmarkClickedController bookmarkClickedController = Get.find();
 
   // void checker(List list, int index) {
@@ -64,7 +58,7 @@ class _DashboardTopListingsState extends State<DashboardTopListings> {
                           Flexible(
                             child: Text(
                               list[index].title,
-                              style: widget.textTheme.headline4,
+                              style: textTheme.headline4,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -78,45 +72,52 @@ class _DashboardTopListingsState extends State<DashboardTopListings> {
                       Row(
                         children: [
                           ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              shape: const CircleBorder(),
-                            ),
-                            onPressed: () {
-                              // print('object');
-                              setState(() {
+                              style: ElevatedButton.styleFrom(
+                                shape: const CircleBorder(),
+                              ),
+                              onPressed: () {
+                                // print('object');
+                                // setState(() {
                                 allListingsBookmarkController
                                     .addBookmark(list[index]);
-                              });
-                            },
-                            // child: Obx(() =>
-                            //     Icon(bookmarkClickedController.icon.value))
-                            // list[index].favorite == true
-                            //     ? Obx(() =>
-                            //         Icon(bookmarkClickedController.icon.value))
-                            //     : Icon(Icons.bookmark_border_outlined)
+                                // });
+                              },
+                              // child: Obx(() =>
+                              //     Icon(bookmarkClickedController.icon.value))
+                              // list[index].favorite == true
+                              //     ? Obx(() =>
+                              //         Icon(bookmarkClickedController.icon.value))
+                              //     : Icon(Icons.bookmark_border_outlined)
 
-                            child: Obx(() =>
-                                allListingsBookmarkController.listFavBool.value
-                                    ? Icon(Icons.bookmark)
-                                    : Icon(Icons.bookmark_border_outlined)),
+                              // child: GetBuilder<AllListingsBookmarkController>((_) => allListingsBookmarkController
+                              //         .getFav(list[index])
+                              //     ? const Icon(Icons.bookmark)
+                              //     : const Icon(Icons.bookmark_border_outlined)),
+                              child: GetBuilder<AllListingsBookmarkController>(
+                                  builder: (_) => allListingsBookmarkController
+                                          .getFav(list[index])
+                                      ? const Icon(Icons.bookmark)
+                                      : const Icon(
+                                          Icons.bookmark_border_outlined))
+                              //     : const Icon(Icons.bookmark_border_outlined)),
 
-                            // child: list[index].favorite
-                            //     ? Icon(Icons.bookmark)
-                            //     : Icon(Icons.bookmark_border_outlined)
-                            // child: Icon(bookmarkClickedController.icon.value),
-                          ),
+                              // child: list[index].favorite
+                              //     ? Icon(Icons.bookmark)
+                              //     : Icon(Icons.bookmark_border_outlined)
+                              // child: Icon(bookmarkClickedController.icon.value),
+                              ),
                           const SizedBox(width: 20),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 list[index].heading,
-                                style: widget.textTheme.headline4,
+                                style: textTheme.headline4,
                                 overflow: TextOverflow.ellipsis,
                               ),
                               Text(
                                 list[index].subheading,
-                                style: widget.textTheme.bodyText2,
+                                style: textTheme.bodyText2,
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ],
