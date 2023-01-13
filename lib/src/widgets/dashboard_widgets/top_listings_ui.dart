@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:mr_gharbeti/src/controller/all_listings_bookmark_controller.dart';
-import 'package:mr_gharbeti/src/controller/bookmark_clicked_controller.dart';
-import '../../controller/bookmark_clicked_controller.dart';
 import '../../models/all_listings_model.dart';
 import '../../models/top_listings_model.dart';
 
@@ -18,7 +16,6 @@ class DashboardTopListings extends StatefulWidget {
 
 class _DashboardTopListingsState extends State<DashboardTopListings> {
   // BookmarkClickedController bookmarkClickedController = Get.find();
-  AllListingsBookmarkController allListingsBookmarkController = Get.find();
 
   // void checker(List list, int index) {
   //   list[index].favorite
@@ -28,6 +25,8 @@ class _DashboardTopListingsState extends State<DashboardTopListings> {
 
   @override
   Widget build(BuildContext context) {
+    AllListingsBookmarkController allListingsBookmarkController = Get.find();
+
     var brightness = MediaQuery.of(context).platformBrightness;
     final isDark = brightness == Brightness.dark;
     // final list = DashboardTopListingsModel.list;
@@ -79,28 +78,33 @@ class _DashboardTopListingsState extends State<DashboardTopListings> {
                       Row(
                         children: [
                           ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                shape: const CircleBorder(),
-                              ),
-                              onPressed: () {
-                                // print('object');
-                                setState(() {
-                                  allListingsBookmarkController
-                                      .addBookmark(list[index]);
-                                });
-                              },
-                              // child: Obx(() =>
-                              //     Icon(bookmarkClickedController.icon.value))
-                              // list[index].favorite == true
-                              //     ? Obx(() =>
-                              //         Icon(bookmarkClickedController.icon.value))
-                              //     : Icon(Icons.bookmark_border_outlined)
+                            style: ElevatedButton.styleFrom(
+                              shape: const CircleBorder(),
+                            ),
+                            onPressed: () {
+                              // print('object');
+                              setState(() {
+                                allListingsBookmarkController
+                                    .addBookmark(list[index]);
+                              });
+                            },
+                            // child: Obx(() =>
+                            //     Icon(bookmarkClickedController.icon.value))
+                            // list[index].favorite == true
+                            //     ? Obx(() =>
+                            //         Icon(bookmarkClickedController.icon.value))
+                            //     : Icon(Icons.bookmark_border_outlined)
 
-                              child: list[index].favorite
-                                  ? Icon(Icons.bookmark)
-                                  : Icon(Icons.bookmark_border_outlined)
-                              // child: Icon(bookmarkClickedController.icon.value),
-                              ),
+                            child: Obx(() =>
+                                allListingsBookmarkController.listFavBool.value
+                                    ? Icon(Icons.bookmark)
+                                    : Icon(Icons.bookmark_border_outlined)),
+
+                            // child: list[index].favorite
+                            //     ? Icon(Icons.bookmark)
+                            //     : Icon(Icons.bookmark_border_outlined)
+                            // child: Icon(bookmarkClickedController.icon.value),
+                          ),
                           const SizedBox(width: 20),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

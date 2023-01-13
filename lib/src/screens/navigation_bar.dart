@@ -9,10 +9,14 @@ import 'package:mr_gharbeti/src/screens/chat.dart';
 import 'package:mr_gharbeti/src/screens/dashboard.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
+import '../controller/all_listings_bookmark_controller.dart';
+
 class NavigationPage extends StatelessWidget {
   // NavigationPage({super.key});
   BottomNavigationController bottomNavigationController =
       Get.put(BottomNavigationController());
+  AllListingsBookmarkController allListingsBookmarkController = Get.find();
+
   NavigationPage({Key? key}) : super(key: key);
 
   final screens = [
@@ -48,6 +52,8 @@ class NavigationPage extends StatelessWidget {
           // tabBackgroundColor:
           //     Colors.purple.withOpacity(0.1), // selected tab background color
           onTabChange: (index) {
+            // print('object');
+            allListingsBookmarkController.updateAll();
             bottomNavigationController.changeIndex(index);
           },
           tabs: const [

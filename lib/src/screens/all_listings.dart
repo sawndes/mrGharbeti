@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mr_gharbeti/src/controller/all_listings_bookmark_controller.dart';
 import 'package:mr_gharbeti/src/models/all_listings_model.dart';
+import 'package:mr_gharbeti/src/screens/listing_details.dart';
 
 import '../controller/bookmark_clicked_controller.dart';
 import '../widgets/dashboard_widgets/appBar_ui.dart';
@@ -16,12 +17,12 @@ class AllListings extends StatefulWidget {
 }
 
 class _AllListingsState extends State<AllListings> {
-  AllListingsBookmarkController allListingsBookmarkController = Get.find();
-
   @override
   Widget build(BuildContext context) {
+    AllListingsBookmarkController allListingsBookmarkController = Get.find();
+
     final textTheme = Theme.of(context).textTheme;
-    var height = MediaQuery.of(context).size.height;
+    // var height = MediaQuery.of(context).size.height;
     var brightness = MediaQuery.of(context).platformBrightness;
     final isDark = brightness == Brightness.dark;
     final list = AllListingsModel.list;
@@ -50,8 +51,12 @@ class _AllListingsState extends State<AllListings> {
                 primary: false,
                 scrollDirection: Axis.vertical,
                 itemCount: list.length,
-                itemBuilder: (context, index) => GestureDetector(
-                  onTap: list[index].onPress,
+                itemBuilder: (context, index) => InkWell(
+                  // onTap: list[index].onPress,
+                  onTap: () {
+                    // print('object');
+                    Get.to(() => ListingDetail(), arguments: list[index]);
+                  },
                   child: SizedBox(
                     width: 320,
                     height: 200,
@@ -98,9 +103,8 @@ class _AllListingsState extends State<AllListings> {
                                       });
                                     },
                                     child: list[index].favorite
-                                        ? const Icon(Icons.bookmark)
-                                        : const Icon(
-                                            Icons.bookmark_border_outlined)),
+                                        ? Icon(Icons.bookmark)
+                                        : Icon(Icons.bookmark_border_outlined)),
                                 const SizedBox(width: 20),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,

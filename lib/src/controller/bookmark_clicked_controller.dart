@@ -8,6 +8,8 @@ class BookmarkClickedController extends GetxController {
   var icon = (Icons.bookmark_border_outlined).obs;
   var favList = <DashboardTopListingsModel>[].obs;
 
+  // void masterCaller(DashboardTopListingsModel)
+
   void addBookmark(DashboardTopListingsModel list) {
     list.favorite = true;
 
