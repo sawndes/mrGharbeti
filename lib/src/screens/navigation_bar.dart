@@ -22,7 +22,7 @@ class NavigationPage extends StatelessWidget {
   final screens = [
     const DashBoard(),
     const ChatPage(),
-    const AddListingsPage(),
+    AddListingsPage(),
     const BookmarkListings(),
   ];
 

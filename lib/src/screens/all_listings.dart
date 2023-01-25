@@ -49,7 +49,8 @@ class AllListings extends StatelessWidget {
                   // onTap: list[index].onPress,
                   onTap: () {
                     // print('object');
-                    Get.to(() => ListingDetail(), arguments: list[index]);
+                    Get.to(() => ListingDetail(textTheme),
+                        arguments: list[index]);
                   },
                   child: SizedBox(
                     width: 320,
@@ -97,13 +98,14 @@ class AllListings extends StatelessWidget {
                                       // });
                                     },
                                     child: GetBuilder<
-                                            AllListingsBookmarkController>(
-                                        builder: (_) =>
-                                            allListingsBookmarkController
-                                                    .getFav(list[index])
-                                                ? const Icon(Icons.bookmark)
-                                                : const Icon(Icons
-                                                    .bookmark_border_outlined))
+                                        AllListingsBookmarkController>(
+                                      builder: (_) =>
+                                          allListingsBookmarkController
+                                                  .getFav(list[index])
+                                              ? const Icon(Icons.bookmark)
+                                              : const Icon(Icons
+                                                  .bookmark_border_outlined),
+                                    )
                                     // child: Obx(
                                     //   () => allListingsBookmarkController
                                     //           .listFavBool.value
