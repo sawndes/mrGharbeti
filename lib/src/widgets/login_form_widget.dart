@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:mr_gharbeti/src/models/user_model.dart';
+import 'package:mr_gharbeti/src/widgets/authentication/login_controller.dart';
+import 'package:mr_gharbeti/src/widgets/firestore/user_firestore.dart';
 import './Forgot_pw_widgets/forgot_password_modal_bottom_widget.dart';
 
 class LoginForm extends StatelessWidget {
@@ -7,7 +11,10 @@ class LoginForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final controller = Get.put(LoginController());
+    GlobalKey<FormState> _formKey = GlobalKey();
     return Form(
+      key: _formKey,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 20.0),
         child: Column(
@@ -25,6 +32,7 @@ class LoginForm extends StatelessWidget {
               "Mr Gharbeti",
             ),
             TextFormField(
+              controller: controller.email,
               decoration: const InputDecoration(
                 prefixIcon: Icon(Icons.person_outline_outlined),
                 labelText: "E-mail",
@@ -36,6 +44,7 @@ class LoginForm extends StatelessWidget {
               height: 30,
             ),
             TextFormField(
+              controller: controller.password,
               decoration: const InputDecoration(
                 prefixIcon: Icon(Icons.fingerprint),
                 labelText: "Password",
@@ -61,7 +70,14 @@ class LoginForm extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    LoginController.instance.loginUser(
+                      controller.email.text.trim(),
+                      controller.password.text.trim(),
+                    );
+                  }
+                },
                 child: const Text("LOGIN"),
               ),
             ),
@@ -90,7 +106,14 @@ class LoginForm extends StatelessWidget {
                   height: 10,
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    // UserModel user = UserModel(
+                    //     fullName: 'fullName',
+                    //     email: 'email',
+                    //     phoneNo: 'phoneNo',
+                    //     password: 'password');
+                    // UserRepository.instance.tryUpdateUI(user);
+                  },
                   child: Text.rich(
                     TextSpan(
                       text: 'Don\'t have an Account? ',

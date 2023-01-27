@@ -8,6 +8,7 @@ class ChatMessageInputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      alignment: Alignment.bottomCenter,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       decoration: BoxDecoration(color: Color(0xFFF7F6F1), boxShadow: [
         BoxShadow(

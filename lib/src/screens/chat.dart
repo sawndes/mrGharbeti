@@ -1,11 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:mr_gharbeti/src/widgets/authentication/database_methods.dart';
+import 'package:mr_gharbeti/src/widgets/chat/chat_screen_final.dart';
 // import 'package:mr_gharbeti/src/screens/chat_message_screen.dart';
 import '../screens/chat_message_screen.dart';
 import '../models/chat_model.dart';
 import 'package:get/get.dart';
 
-class ChatPage extends StatelessWidget {
+class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
+
+  @override
+  State<ChatPage> createState() => _ChatPageState();
+}
+
+class _ChatPageState extends State<ChatPage> {
+  Stream? usersStream, chatRoomsStream;
+
+  getChatRoomIdByUsernames(String a, String b) {
+    if (a.substring(0, 1).codeUnitAt(0) > b.substring(0, 1).codeUnitAt(0)) {
+      return "$b\_$a";
+    } else {
+      return "$a\_$b";
+    }
+  }
+
+  getChatRooms() async {
+    // chatRoomsStream = await DatabaseMethods().getChatRooms();
+    setState(() {});
+  }
+
+  onScreenLoaded() async {
+    // await getMyInfoFromSharedPreference();
+    getChatRooms();
+  }
+
+  @override
+  void initState() {
+    onScreenLoaded();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +64,23 @@ class ChatPage extends StatelessWidget {
               itemCount: chatsData.length,
               itemBuilder: (context, index) => InkWell(
                 onTap: () {
-                  Get.to(ChatMessageScreen(), arguments: chatsData[index]);
+                  var chatRoomId = getChatRoomIdByUsernames(
+                      'ETDoR1760nbGDZodGIvxLMQvprR2',
+                      '6sXzuLh673UHiZOEpNXfUUgawV92');
+                  Map<String, dynamic> chatRoomInfoMap = {
+                    "users": [
+                      'ETDoR1760nbGDZodGIvxLMQvprR2',
+                      '6sXzuLh673UHiZOEpNXfUUgawV92'
+                    ]
+                  };
+                  // Get.to(() => ChatMessageScreen(),
+                  //     arguments: chatsData[index]);
+                  DatabaseMethods().createChatRoom(chatRoomId, chatRoomInfoMap);
+                  Get.to(() => FinalChatScreen(), arguments: [
+                    'Sawndes',
+                    '6sXzuLh673UHiZOEpNXfUUgawV92',
+                    'https://lh3.googleusercontent.com/a/AEdFTp6gxx6_kIwOlyuMuHuLV3FmwI-b9wWH12x8eb_tFM4=s96-c',
+                  ]);
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(

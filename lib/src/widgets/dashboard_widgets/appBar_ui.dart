@@ -45,7 +45,7 @@ class AppBarUI extends StatelessWidget implements PreferredSizeWidget {
             ),
             child: IconButton(
                 onPressed: () {
-                  Get.to(() => const ProfileScreen());
+                  Get.to(() => ProfileScreen(uid: FireAuth.instance.user.uid));
                   // FireAuth.instance.logout();
                 },
                 icon: const Image(
@@ -81,7 +81,9 @@ class AppBarUI extends StatelessWidget implements PreferredSizeWidget {
             ),
             child: IconButton(
                 onPressed: () {
-                  Get.to(() => const ProfileScreen());
+                  Get.to(() => ProfileScreen(uid: FireAuth.instance.user.uid));
+
+                  // Get.to(() => const ProfileScreen());
                   // FireAuth.instance.logout();
                 },
                 icon: const Image(

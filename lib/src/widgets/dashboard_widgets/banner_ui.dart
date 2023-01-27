@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mr_gharbeti/src/models/user_model.dart';
 import 'package:mr_gharbeti/src/screens/all_listings.dart';
+import 'package:mr_gharbeti/src/widgets/firestore/user_firestore.dart';
 
 class DashboardBannerUI extends StatelessWidget {
   const DashboardBannerUI({
@@ -40,6 +42,7 @@ class DashboardBannerUI extends StatelessWidget {
               color: const Color(0xFFF7F6F1),
               child: InkWell(
                 onTap: () {
+                  UserRepository.instance.tryUpdateUI();
                   print("Wow! Ripple");
                 },
                 child: Column(

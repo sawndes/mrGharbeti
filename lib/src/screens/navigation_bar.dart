@@ -10,6 +10,7 @@ import 'package:mr_gharbeti/src/screens/dashboard.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 import '../controller/all_listings_bookmark_controller.dart';
+import '../widgets/authentication/fire_auth.dart';
 
 class NavigationPage extends StatelessWidget {
   // NavigationPage({super.key});
@@ -20,7 +21,7 @@ class NavigationPage extends StatelessWidget {
   NavigationPage({Key? key}) : super(key: key);
 
   final screens = [
-    const DashBoard(),
+    DashBoard(uid: FireAuth.instance.user.uid),
     const ChatPage(),
     AddListingsPage(),
     const BookmarkListings(),

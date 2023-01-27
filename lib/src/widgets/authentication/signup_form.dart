@@ -113,7 +113,11 @@ class SignUpForm extends StatelessWidget {
                               phoneNo: controller.phoneNo.text.trim(),
                               password: controller.password.text.trim(),
                             );
-                            SignUpController.instance.createUser(user);
+                            SignUpController.instance.registerUser(
+                                controller.email.text.trim(),
+                                controller.password.text.trim(),
+                                user);
+                            // SignUpController.instance.createUser(user);
                           }
                         },
                         child: const Text('SIGNUP'),
@@ -122,7 +126,7 @@ class SignUpForm extends StatelessWidget {
                     const SizedBox(
                       height: 6,
                     ),
-                    Center(child: const Text('OR')),
+                    const Center(child: Text('OR')),
                     const SizedBox(
                       height: 6,
                     ),
