@@ -36,6 +36,108 @@ class DatabaseMethods {
         .set(messageInfoMap);
   }
 
+  firstListingAdder() async {
+    Map<String, dynamic> firstTimeListingsInfo = {"listings": []};
+
+    final snapShot = await FirebaseFirestore.instance
+        .collection("listings")
+        .doc('all_listings')
+        .get();
+    // .set(firstTimeListingsInfo);
+
+    if (snapShot.exists) {
+      // chatroom already exists
+      return true;
+    } else {
+      // chatroom does not exists
+      return FirebaseFirestore.instance
+          .collection("listings")
+          .doc('all_listings')
+          .set(firstTimeListingsInfo);
+    }
+  }
+
+  Future<Stream<DocumentSnapshot<Map<String, dynamic>>>> getListings() async {
+    // String myUsername = await SharedPreferenceHelper().getUserName();
+    // return FirebaseFirestore.instance.collection("listings").snapshots();
+    return FirebaseFirestore.instance
+        .collection('listings')
+        .doc('all_listings')
+        .snapshots();
+    // return FirebaseFirestore.instance.collection("listings").doc("all_listings").get
+  }
+
+  Future<Stream<DocumentSnapshot<Map<String, dynamic>>>> getFavListings(
+      String uid) async {
+    return FirebaseFirestore.instance
+        .collection('favorites')
+        .doc(uid)
+        .snapshots();
+  }
+
+  // final Map<String, bool> userMap = await getUserMap();
+  // print(userMap);
+
+  Future addFavListings(String uid, String listingId) async {
+    final snapShot =
+        await FirebaseFirestore.instance.collection("favorites").doc(uid).get();
+    if (snapShot.exists) {
+      // listings has been added before already exists
+      return FirebaseFirestore.instance
+          .collection("favorites")
+          .doc(uid)
+          .update({
+        'listings': FieldValue.arrayUnion([
+          {listingId: false}
+        ])
+      });
+      // return true;
+    } else {
+      // chatroom does not exists
+      return FirebaseFirestore.instance.collection("favorites").doc(uid).set({
+        'listings': FieldValue.arrayUnion([
+          {listingId: false}
+        ])
+      });
+      // .set(listingsInfoMap);
+    }
+  }
+
+  Future addListings(String uid, Map<String, dynamic> listingsInfoMap) async {
+    final QuerySnapshot qSnap =
+        await FirebaseFirestore.instance.collection('listings').get();
+    final int documents = qSnap.docs.length + 1;
+
+    final snapShot = await FirebaseFirestore.instance
+        .collection("listings")
+        .doc('all_listings')
+        .get();
+    // .set(firstTimeListingsInfo);
+
+    if (snapShot.exists) {
+      // listings has been added before already exists
+      return FirebaseFirestore.instance
+          .collection("listings")
+          .doc('all_listings')
+          // .collection('listings')
+          // .doc(documents.toString())
+
+          .update({
+        'listings': FieldValue.arrayUnion([listingsInfoMap])
+      });
+      // return true;
+    } else {
+      // chatroom does not exists
+      return FirebaseFirestore.instance
+          .collection("listings")
+          .doc('all_listings')
+          .set({
+        'listings': FieldValue.arrayUnion([listingsInfoMap])
+      });
+      // .set(listingsInfoMap);
+    }
+  }
+
   updateLastMessageSend(
       String chatRoomId, Map<String, dynamic> lastMessageInfoMap) {
     return FirebaseFirestore.instance
