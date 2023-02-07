@@ -22,9 +22,9 @@ class NavigationPage extends StatelessWidget {
 
   final screens = [
     DashBoard(uid: FireAuth.instance.user.uid),
-    const ChatPage(),
+    ChatPage(),
     AddListingsPage(),
-    const BookmarkListings(),
+    BookmarkListings(),
   ];
 
   @override

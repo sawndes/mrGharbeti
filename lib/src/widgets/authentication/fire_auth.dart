@@ -18,15 +18,15 @@ class FireAuth extends GetxController {
 
   // Variables
   final _auth = FirebaseAuth.instance;
-  late final Rx<User?> firebaseUser;
+  Rx<User?>? firebaseUser;
   var verificationId = ''.obs;
-  User get user => firebaseUser.value!;
+  User get user => firebaseUser!.value!;
 
   @override
   void onReady() {
     firebaseUser = Rx<User?>(_auth.currentUser);
-    firebaseUser.bindStream(_auth.userChanges());
-    ever(firebaseUser, _setInitialScreen);
+    firebaseUser!.bindStream(_auth.userChanges());
+    ever(firebaseUser!, _setInitialScreen);
     // super.onReady();
   }
 
@@ -86,9 +86,9 @@ class FireAuth extends GetxController {
         email: email,
         password: password,
       );
-      print(firebaseUser.value);
+      print(firebaseUser!.value);
       createUser(user);
-      firebaseUser.value != null
+      firebaseUser!.value != null
           ? Get.offAll(() => NavigationPage())
           : Get.to(() => const HomeScreen());
     } on FirebaseAuthException catch (e) {
@@ -110,9 +110,9 @@ class FireAuth extends GetxController {
         email: email,
         password: password,
       );
-      print(firebaseUser.value!.uid);
+      print(firebaseUser!.value!.uid);
       print('asdasdasd');
-      firebaseUser.value != null
+      firebaseUser!.value != null
           ? Get.offAll(() => NavigationPage())
           : Get.to(() => const HomeScreen());
     } on FirebaseAuthException catch (e) {

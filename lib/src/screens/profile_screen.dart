@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -46,6 +48,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
   onScreenLoaded() async {
     await getmyInfo();
     // await getMyInfoFromSharedPreference();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -116,7 +123,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(100),
                       child: Image(
-                        image: AssetImage('assets/images/googlelogo.png'),
+                        image: NetworkImage(FireAuth.instance.user.photoURL!),
 
                         // image: NetworkImage(myprofilePic!),
                       ),
@@ -205,8 +212,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 title: 'Logout',
                 icon: LineAwesomeIcons.alternate_sign_out,
                 textColor: Colors.red,
-                onPress: () {
-                  FireAuth.instance.logout();
+                onPress: () async {
+                  continueCallBack() => {
+                        FireAuth.instance.logout(),
+                        Navigator.of(context).pop(),
+                      };
+
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return BlurryDialog("Confirm",
+                          "Are you sure you want to logout?", continueCallBack);
+                    },
+                  );
                 },
               ),
               // ProfileMenuWidget(),
@@ -216,5 +234,50 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
     // });
+  }
+}
+
+class BlurryDialog extends StatelessWidget {
+  String title;
+  String content;
+  VoidCallback continueCallBack;
+
+  BlurryDialog(this.title, this.content, this.continueCallBack, {super.key});
+  TextStyle textStyle = const TextStyle(color: Colors.black);
+
+  @override
+  Widget build(BuildContext context) {
+    return BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
+        child: AlertDialog(
+          title: Text(
+            title,
+            style: textStyle,
+          ),
+          content: Text(
+            content,
+            style: textStyle,
+          ),
+          actions: <Widget>[
+            SizedBox(
+              width: 100,
+              child: ElevatedButton(
+                child: const Text("Continue"),
+                onPressed: () {
+                  continueCallBack();
+                },
+              ),
+            ),
+            SizedBox(
+              width: 70,
+              child: OutlinedButton(
+                child: const Text("Cancel"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
+          ],
+        ));
   }
 }

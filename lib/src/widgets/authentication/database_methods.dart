@@ -57,6 +57,16 @@ class DatabaseMethods {
     }
   }
 
+  Future<Stream<QuerySnapshot<Map<String, dynamic>>>> getChat(
+      String uid) async {
+    // String? myUsername = await SharedPreferenceHelper().getUserName();
+    return FirebaseFirestore.instance
+        .collection("chatrooms")
+        .orderBy("lastMessageSendTs", descending: true)
+        .where("users", arrayContains: uid)
+        .snapshots();
+  }
+
   Future<Stream<DocumentSnapshot<Map<String, dynamic>>>> getListings() async {
     // String myUsername = await SharedPreferenceHelper().getUserName();
     // return FirebaseFirestore.instance.collection("listings").snapshots();
@@ -67,41 +77,75 @@ class DatabaseMethods {
     // return FirebaseFirestore.instance.collection("listings").doc("all_listings").get
   }
 
-  Future<Stream<DocumentSnapshot<Map<String, dynamic>>>> getFavListings(
-      String uid) async {
-    return FirebaseFirestore.instance
-        .collection('favorites')
-        .doc(uid)
-        .snapshots();
+  //   Future<Stream<DocumentSnapshot<Map<String, dynamic>>>> getListings() async {
+  //   // String myUsername = await SharedPreferenceHelper().getUserName();
+  //   // return FirebaseFirestore.instance.collection("listings").snapshots();
+  // return FirebaseFirestore.instance
+  //     .collection('listings')
+  //     .doc('all_listings')
+  //     .snapshots();
+  //   // return FirebaseFirestore.instance.collection("listings").doc("all_listings").get
+  // }
+
+  // Future<Stream<DocumentSnapshot<Map<String, dynamic>>>> getFavListings (
+  //     String uid) async {
+  //   String userId = "21GJW3e0UpUkQdOx5H6iWaDdyLt1";
+  //   FirebaseFirestore.instance
+  //       .collection("listings")
+  //       .doc("all_listings")
+  //       .get()
+  //       .then((documentSnapshot) {
+  //     var listings = documentSnapshot.data()!['listings'];
+  //     var favorites =
+  //         listings.where((listing) => listing["favorites"][userId] == true);
+  //     // do something with the favorite listings
+  //     return listings;
+  //   });
+  // }
+  Future<List<dynamic>> getFavListings(String uid) async {
+    String userId = uid;
+    return await FirebaseFirestore.instance
+        .collection("listings")
+        .doc("all_listings")
+        .get()
+        .then((documentSnapshot) {
+      var listings = documentSnapshot.data()!['listings'];
+      var favorites = listings
+          .where((listing) => listing["favorites"][userId] == true)
+          .toList();
+
+      return favorites;
+    });
+    // return f;
   }
 
   // final Map<String, bool> userMap = await getUserMap();
   // print(userMap);
 
-  Future addFavListings(String uid, String listingId) async {
-    final snapShot =
-        await FirebaseFirestore.instance.collection("favorites").doc(uid).get();
-    if (snapShot.exists) {
-      // listings has been added before already exists
-      return FirebaseFirestore.instance
-          .collection("favorites")
-          .doc(uid)
-          .update({
-        'listings': FieldValue.arrayUnion([
-          {listingId: false}
-        ])
-      });
-      // return true;
-    } else {
-      // chatroom does not exists
-      return FirebaseFirestore.instance.collection("favorites").doc(uid).set({
-        'listings': FieldValue.arrayUnion([
-          {listingId: false}
-        ])
-      });
-      // .set(listingsInfoMap);
-    }
-  }
+  // Future addFavListings(String uid, String listingId) async {
+  //   final snapShot =
+  //       await FirebaseFirestore.instance.collection("favorites").doc(uid).get();
+  //   if (snapShot.exists) {
+  //     // listings has been added before already exists
+  //     return FirebaseFirestore.instance
+  //         .collection("favorites")
+  //         .doc(uid)
+  //         .update({
+  //       'listings': FieldValue.arrayUnion([
+  //         {listingId: false}
+  //       ])
+  //     });
+  //     // return true;
+  //   } else {
+  //     // chatroom does not exists
+  //     return FirebaseFirestore.instance.collection("favorites").doc(uid).set({
+  //       'listings': FieldValue.arrayUnion([
+  //         {listingId: false}
+  //       ])
+  //     });
+  //     // .set(listingsInfoMap);
+  //   }
+  // }
 
   Future addListings(String uid, Map<String, dynamic> listingsInfoMap) async {
     final QuerySnapshot qSnap =

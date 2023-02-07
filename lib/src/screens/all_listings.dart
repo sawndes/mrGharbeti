@@ -20,14 +20,13 @@ class AllListings extends StatefulWidget {
 
 class _AllListingsState extends State<AllListings> {
   Stream<DocumentSnapshot<Map<String, dynamic>>>? listingStream;
-  Stream<DocumentSnapshot<Map<String, dynamic>>>? favListStream;
   String thisUser = FireAuth.instance.user.uid;
 
   // Future<Future<DocumentSnapshot<Map<String, dynamic>>>>? listings;
 
   getListings() async {
     listingStream = (await DatabaseMethods().getListings());
-    favListStream = await DatabaseMethods().getFavListings(thisUser);
+    // favListStream = await DatabaseMethods().getFavListings(thisUser);
     setState(() {});
   }
 
@@ -43,14 +42,11 @@ class _AllListingsState extends State<AllListings> {
 
   @override
   Widget build(BuildContext context) {
-    AllListingsBookmarkController allListingsBookmarkController = Get.find();
-
     final textTheme = Theme.of(context).textTheme;
 
     // var height = MediaQuery.of(context).size.height;
     var brightness = MediaQuery.of(context).platformBrightness;
     final isDark = brightness == Brightness.dark;
-    final list = AllListingsModel.list;
     return Scaffold(
       appBar: AppBarUI('Mr. Gharbeti', true),
       body: Container(
@@ -70,10 +66,6 @@ class _AllListingsState extends State<AllListings> {
             ),
             Expanded(
               child: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-                // stream: FirebaseFirestore.instance
-                //     .collection('listings')
-                //     .doc('all_listings')
-                //     .snapshots(),
                 stream: listingStream,
                 builder: (context, snapshot) {
                   return snapshot.hasData
@@ -92,139 +84,12 @@ class _AllListingsState extends State<AllListings> {
                 },
               ),
             ),
-
-            // child: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-            //   stream: FirebaseFirestore.instance
-            //       .collection('listings')
-            //       .doc('all_listings')
-            //       .snapshots(),
-            //   builder: (BuildContext context,
-            //       AsyncSnapshot<DocumentSnapshot> snapshot) {
-            //     // if (snapshot.connectionState == ConnectionState.waiting) {
-            //     //   return const Text("Loading");
-            //     // }
-
-            //     Map<String, dynamic> data =
-            //         snapshot.data!.data()! as Map<String, dynamic>;
-            //     return ListView(
-            //         children: data['listings'].map<Widget>((e) {
-            //       return ListTile(
-            //         title: Text(e['description']
-            //             .toString()), // 👈 printing every string
-            //       );
-            //     }).toList());
-            //   },
-            // ),
-          ])
-
-          // Expanded(
-          //   // height: height * 0.8,
-          //   child: ListView.builder(
-          //     shrinkWrap: true,
-          //     primary: false,
-          //     scrollDirection: Axis.vertical,
-          //     itemCount: list.length,
-          //     itemBuilder: (context, index) => InkWell(
-          //       // onTap: list[index].onPress,
-          //       onTap: () {
-          //         // print('object');
-          //         Get.to(() => ListingDetail(textTheme),
-          //             arguments: list[index]);
-          //       },
-          //       child: SizedBox(
-          //         width: 320,
-          //         height: 200,
-          //         child: Padding(
-          //           padding: const EdgeInsets.only(right: 10, top: 5),
-          //           child: Container(
-          //             decoration: BoxDecoration(
-          //               borderRadius: BorderRadius.circular(12),
-          //               //For Dark Color
-          //               color: isDark ? Color(0xFF272727) : Color(0xFFF7F6F1),
-          //             ),
-          //             padding: const EdgeInsets.all(10),
-          //             child: Column(
-          //               crossAxisAlignment: CrossAxisAlignment.start,
-          //               children: [
-          //                 Row(
-          //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //                   children: [
-          //                     Flexible(
-          //                       child: Text(
-          //                         list[index].title,
-          //                         style: textTheme.headline4,
-          //                         maxLines: 2,
-          //                         overflow: TextOverflow.ellipsis,
-          //                       ),
-          //                     ),
-          //                     Flexible(
-          //                         child: Image(
-          //                             image: AssetImage(list[index].image),
-          //                             height: 110)),
-          //                   ],
-          //                 ),
-          //                 Row(
-          //                   children: [
-          //                     ElevatedButton(
-          //                         style: ElevatedButton.styleFrom(
-          //                           shape: const CircleBorder(),
-          //                         ),
-          //                         onPressed: () {
-          //                           // print('object');
-          //                           // setState(() {
-          //                           allListingsBookmarkController
-          //                               .addBookmark(list[index]);
-          //                           // });
-          //                         },
-          //                         child: GetBuilder<
-          //                             AllListingsBookmarkController>(
-          //                           builder: (_) =>
-          //                               allListingsBookmarkController
-          //                                       .getFav(list[index])
-          //                                   ? const Icon(Icons.bookmark)
-          //                                   : const Icon(Icons
-          //                                       .bookmark_border_outlined),
-          //                         )
-          //                         // child: Obx(
-          //                         //   () => allListingsBookmarkController
-          //                         //           .listFavBool.value
-          //                         //       ? const Icon(Icons.bookmark)
-          //                         //       : const Icon(
-          //                         //           Icons.bookmark_border_outlined)),
-          //                         ),
-          //                     const SizedBox(width: 20),
-          //                     Column(
-          //                       crossAxisAlignment: CrossAxisAlignment.start,
-          //                       children: [
-          //                         Text(
-          //                           list[index].heading,
-          //                           style: textTheme.headline4,
-          //                           overflow: TextOverflow.ellipsis,
-          //                         ),
-          //                         Text(
-          //                           list[index].subheading,
-          //                           style: textTheme.bodyText2,
-          //                           overflow: TextOverflow.ellipsis,
-          //                         ),
-          //                       ],
-          //                     )
-          //                   ],
-          //                 )
-          //               ],
-          //             ),
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-          // ),
-
-          ),
+          ])),
     );
   }
 }
 
-class AllListingsTile extends StatefulWidget {
+class AllListingsTile extends StatelessWidget {
   final List ds;
   // final Map<String, dynamic> favs;
   // final int favs;
@@ -232,13 +97,10 @@ class AllListingsTile extends StatefulWidget {
   const AllListingsTile(this.textTheme, this.ds, {super.key});
 
   @override
-  State<AllListingsTile> createState() => _AllListingsTileState();
-}
-
-class _AllListingsTileState extends State<AllListingsTile> {
-  @override
   Widget build(BuildContext context) {
-    var list = widget.ds;
+    AllListingsBookmarkController allListingsBookmarkController = Get.find();
+
+    var list = ds;
     String thisUser = FireAuth.instance.user.uid;
 
     // var favLists =
@@ -251,135 +113,93 @@ class _AllListingsTileState extends State<AllListingsTile> {
       itemCount: list.length,
       itemBuilder: (context, index) => InkWell(
         // onTap: list[index].onPress,
-        onTap: () {
-          // print(widget.favs);
+        onTap: () async {
+          Get.to(() => ListingDetail(textTheme), arguments: list[index]);
 
-          // print('object');
-          // Get.to(() => ListingDetail(textTheme),
-          //     arguments: list[index]);
+          // print(allListingsBookmarkController.favList);
         },
-        child: SizedBox(
-          width: 320,
-          height: 200,
-          child: Padding(
-            padding: const EdgeInsets.only(right: 10, top: 5),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                //For Dark Color
-                color: Color(0xFFF7F6F1),
-              ),
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 20.0),
+          child: Row(
+            children: [
+              Ink(
+                width: 332,
+                height: 200,
+                // padding: const EdgeInsets.only(right: 5, top: 7),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF7F6F1),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 18.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Flexible(
-                        child: Text(
-                          list[index]['listing_name'],
-                          style: widget.textTheme.headline4,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Flexible(
+                            child: Text(
+                              list[index]['listing_name'],
+                              style: textTheme.headline4,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Flexible(
+                              child: Image(
+                                  // image: AssetImage(list[index].image),
+                                  image: NetworkImage(
+                                      list[index]['listing_photo'][0]),
+                                  height: 110)),
+                        ],
                       ),
-                      Flexible(
-                          child: Image(
-                              // image: AssetImage(list[index].image),
-                              image: NetworkImage(list[index]['listing_photo']),
-                              height: 110)),
+                      Row(
+                        children: [
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: const CircleBorder(),
+                            ),
+                            onPressed: () async {
+                              allListingsBookmarkController.bookmarkAdd(
+                                  list, index, thisUser);
+                            },
+                            child: list[index]['favorites'][thisUser] == null
+                                ? const Icon(Icons.bookmark_border_outlined)
+                                : list[index]['favorites'][thisUser]
+                                    ? const Icon(Icons.bookmark)
+                                    : const Icon(
+                                        Icons.bookmark_border_outlined),
+                          ),
+                          const SizedBox(width: 20),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                list[index]['listing_price'] + ' per month',
+                                style: textTheme.headline4,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              Text(
+                                list[index]['listing_address'],
+                                style: textTheme.bodyText2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
                     ],
                   ),
-                  Row(
-                    children: [
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shape: const CircleBorder(),
-                        ),
-                        onPressed: () async {
-                          var fav = list[index]['favorites'][thisUser];
-                          print(fav);
-                          var listingId = list[index]['listing_id'];
-
-                          await FirebaseFirestore.instance
-                              .collection("listings")
-                              .doc("all_listings")
-                              .get()
-                              .then((documentSnapshot) {
-                            var listings = documentSnapshot.data()!['listings'];
-                            var index = listings.indexWhere((listing) =>
-                                // listing["favorites"] == fav &&
-                                listing["listing_id"] == listingId);
-                            if (index != -1) {
-                              listings[index]["favorites"][thisUser] = !fav;
-                            }
-                            return FirebaseFirestore.instance
-                                .collection("listings")
-                                .doc("all_listings")
-                                .update({"listings": listings});
-                          });
-                        },
-                        child: list[index]['favorites'][thisUser]
-                            ? const Icon(Icons.bookmark)
-                            : const Icon(Icons.bookmark_border_outlined),
-
-                        // child: widget.getFavValue()
-                        //     ? Icon(Icons.bookmark)
-                        //     : Icon(Icons.bookmark_border_outlined),
-                        // child: GetBuilder<AllListingsBookmarkController>(
-                        //   builder: (_) => allListingsBookmarkController
-                        //           .getFav(list[index])
-                        //       ? const Icon(Icons.bookmark)
-                        //       : const Icon(Icons.bookmark_border_outlined),
-                        // ),
-                      ),
-                      const SizedBox(width: 20),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            list[index]['listing_name'],
-                            style: widget.textTheme.headline4,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          Text(
-                            list[index]['listing_name'],
-                            style: widget.textTheme.bodyText2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ],
-                      )
-                    ],
-                  )
-                ],
+                ),
               ),
-            ),
+              const SizedBox(
+                height: 30,
+              ),
+            ],
           ),
         ),
       ),
     );
   }
 }
-
-// class AllListingsTile extends StatefulWidget {
-//   final List ds;
-//   const AllListingsTile(this.ds, {super.key});
-
-//   @override
-//   State<AllListingsTile> createState() => _AllListingsTileState();
-// }
-
-// class _AllListingsTileState extends State<AllListingsTile> {
-//   @override
-//   Widget build(BuildContext context) {
-//     var name = widget.ds[2]['listing_address'];
-//     var len = widget.ds.length;
-//     return ElevatedButton(
-//         onPressed: () {
-//           print(len);
-//           // print(widget.ds['name']);
-//         },
-//         child: Text('sdasdas'));
-//   }
-// }

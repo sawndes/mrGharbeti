@@ -44,12 +44,14 @@ class AppBarUI extends StatelessWidget implements PreferredSizeWidget {
               color: isDark ? const Color(0xFF272727) : const Color(0xFFF7F6F1),
             ),
             child: IconButton(
-                onPressed: () {
-                  Get.to(() => ProfileScreen(uid: FireAuth.instance.user.uid));
-                  // FireAuth.instance.logout();
-                },
-                icon: const Image(
-                    image: AssetImage('assets/images/googlelogo.png'))),
+              onPressed: () {
+                Get.to(() => ProfileScreen(uid: FireAuth.instance.user.uid));
+                // FireAuth.instance.logout();
+              },
+              icon: Image(
+                image: NetworkImage(FireAuth.instance.user.photoURL!),
+              ),
+            ),
           )
         ],
       );
@@ -80,14 +82,17 @@ class AppBarUI extends StatelessWidget implements PreferredSizeWidget {
               color: isDark ? const Color(0xFF272727) : const Color(0xFFF7F6F1),
             ),
             child: IconButton(
-                onPressed: () {
-                  Get.to(() => ProfileScreen(uid: FireAuth.instance.user.uid));
+              onPressed: () {
+                Get.to(() => ProfileScreen(uid: FireAuth.instance.user.uid));
 
-                  // Get.to(() => const ProfileScreen());
-                  // FireAuth.instance.logout();
-                },
-                icon: const Image(
-                    image: AssetImage('assets/images/googlelogo.png'))),
+                // Get.to(() => const ProfileScreen());
+                // FireAuth.instance.logout();
+              },
+              icon: Image(
+                // image: AssetImage('assets/images/googlelogo.png'),
+                image: NetworkImage(FireAuth.instance.user.photoURL!),
+              ),
+            ),
           )
         ],
       );

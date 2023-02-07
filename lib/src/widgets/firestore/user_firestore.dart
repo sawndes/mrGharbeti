@@ -13,7 +13,7 @@ class UserRepository extends GetxController {
     //UserModel user) async {
     var xx = await _db
         .collection("users")
-        .doc(FireAuth.instance.firebaseUser.value!.uid)
+        .doc(FireAuth.instance.firebaseUser!.value!.uid)
         .get();
     return xx.data()!['name'].toString();
 
@@ -34,9 +34,9 @@ class UserRepository extends GetxController {
     //   } else {
     await _db
         .collection("users")
-        .doc(FireAuth.instance.firebaseUser.value!.uid)
+        .doc(FireAuth.instance.firebaseUser!.value!.uid)
         .set({
-          'id': FireAuth.instance.firebaseUser.value!.uid,
+          'id': FireAuth.instance.firebaseUser!.value!.uid,
           'fullName': user.fullName,
           'email': user.email,
           'phoneNo': user.phoneNo,

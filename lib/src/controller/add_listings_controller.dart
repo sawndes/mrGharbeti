@@ -14,8 +14,8 @@ import 'package:random_string/random_string.dart';
 class AddListingsController extends GetxController {
   static AddListingsController get instance => Get.find();
   final title = TextEditingController();
-  final heading = TextEditingController();
-  final subheading = TextEditingController();
+  final price = TextEditingController();
+  final address = TextEditingController();
   final description = TextEditingController();
   String thisUser = FireAuth.instance.user.uid;
 
@@ -55,10 +55,10 @@ class AddListingsController extends GetxController {
 
   addListings(
     TextEditingController title,
-    TextEditingController heading,
-    TextEditingController subheading,
+    TextEditingController price,
+    TextEditingController address,
     TextEditingController description,
-    String img,
+    List<String> img,
   ) async {
     String listingId = '${thisUser}_${randomAlphaNumeric(12)}';
     final Map<String, bool> userMap = await getUserMap();
@@ -66,9 +66,9 @@ class AddListingsController extends GetxController {
 
     Map<String, dynamic> listingsData = {
       "listing_name": title.text.trim(),
-      "listing_address": heading.text.trim(),
+      "listing_price": price.text.trim(),
       "description": description.text.trim(),
-      "sub_heading": subheading.text.trim(),
+      "listing_address": address.text.trim(),
       "listing_photo": img,
       "listings_user": thisUser,
       "favorites": userMap
@@ -83,8 +83,8 @@ class AddListingsController extends GetxController {
     DatabaseMethods().addListings(thisUser, listingsData);
 
     title.clear();
-    heading.clear();
-    subheading.clear();
+    price.clear();
+    address.clear();
     description.clear();
     Get.snackbar('Added', 'Listings added sucessfully');
   }
