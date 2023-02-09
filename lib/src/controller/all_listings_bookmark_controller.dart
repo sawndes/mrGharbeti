@@ -53,9 +53,8 @@ class AllListingsBookmarkController extends GetxController {
         .get()
         .then((documentSnapshot) {
       var listings = documentSnapshot.data()!['listings'];
-      var index = listings.indexWhere((listing) =>
-          // listing["favorites"] == fav &&
-          listing["listing_id"] == listingId);
+      var index =
+          listings.indexWhere((listing) => listing["listing_id"] == listingId);
 
       if (index != -1) {
         listings[index]["favorites"][thisUser] = !fav;

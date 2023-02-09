@@ -71,7 +71,10 @@ class AddListingsController extends GetxController {
       "listing_address": address.text.trim(),
       "listing_photo": img,
       "listings_user": thisUser,
-      "favorites": userMap
+      "favorites": userMap,
+      "rent_user": '',
+      "rent_requests": []
+
       // {
       //   '6sXzuLh673UHiZOEpNXfUUgawV92': false,
       //   'hahaha': false,

@@ -65,8 +65,14 @@ class _DashboardTopListingsState extends State<DashboardTopListings> {
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     Map<String, dynamic> data = snapshot.data!.data()!;
+                    List<dynamic> listings = data['listings'];
 
-                    return AllListingsTile(widget.textTheme, data['listings']);
+                    List filteredListings = listings
+                        .where((listing) => listing['rent_user'].length == 0)
+                        // (listing) =>
+                        //     listing['listings_user'] == thisUser)
+                        .toList();
+                    return AllListingsTile(widget.textTheme, filteredListings);
                   })
               : const Center(child: CircularProgressIndicator());
         },

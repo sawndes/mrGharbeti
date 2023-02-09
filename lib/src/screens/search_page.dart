@@ -158,7 +158,7 @@ class _SearchPageState extends State<SearchPage> {
                                           child: Image(
                                               // image: AssetImage(list[index].image),
                                               image: NetworkImage(
-                                                  listing['listing_photo']),
+                                                  listing['listing_photo'][0]),
                                               height: 110)),
                                     ],
                                   ),

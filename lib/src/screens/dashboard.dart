@@ -11,8 +11,8 @@ import '../widgets/dashboard_widgets/searchBar_ui.dart';
 import '../widgets/dashboard_widgets/top_listings_ui.dart';
 
 class DashBoard extends StatefulWidget {
-  String uid;
-  DashBoard({Key? key, required this.uid}) : super(key: key);
+  // String uid;
+  const DashBoard({Key? key}) : super(key: key);
   static final user_data = UserRepository.instance.tryUpdateUI();
 
   @override

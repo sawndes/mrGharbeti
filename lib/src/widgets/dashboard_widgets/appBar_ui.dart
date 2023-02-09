@@ -20,7 +20,14 @@ class AppBarUI extends StatelessWidget implements PreferredSizeWidget {
     if (backButton == true) {
       return AppBar(
         leading: IconButton(
-          onPressed: () => Get.back(),
+          onPressed: () {
+            // void closeModal() {
+            //   Navigator.of(context).pop();
+            // }
+
+            // closeModal();
+            Get.back();
+          },
           icon: const Icon(
             LineAwesomeIcons.angle_left,
             color: Colors.black,

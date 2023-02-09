@@ -21,7 +21,8 @@ class NavigationPage extends StatelessWidget {
   NavigationPage({Key? key}) : super(key: key);
 
   final screens = [
-    DashBoard(uid: FireAuth.instance.user.uid),
+    // DashBoard(uid: FireAuth.instance.user.uid),
+    DashBoard(),
     ChatPage(),
     AddListingsPage(),
     BookmarkListings(),

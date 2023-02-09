@@ -1,37 +1,40 @@
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mr_gharbeti/src/controller/all_listings_bookmark_controller.dart';
-import 'package:mr_gharbeti/src/models/all_listings_model.dart';
-import 'package:mr_gharbeti/src/screens/listing_details.dart';
-import 'package:mr_gharbeti/src/widgets/authentication/fire_auth.dart';
+import 'package:mr_gharbeti/src/screens/tenant_portal.dart';
+import 'package:mr_gharbeti/src/widgets/dashboard_widgets/appBar_ui.dart';
 
 import '../widgets/authentication/database_methods.dart';
-import '../widgets/dashboard_widgets/appBar_ui.dart';
-import '../widgets/dashboard_widgets/searchBar_ui.dart';
+import '../widgets/authentication/fire_auth.dart';
+import 'listing_details.dart';
 
-class AllListings extends StatefulWidget {
-  const AllListings({Key? key, required this.textTheme}) : super(key: key);
+class TenantAllListings extends StatefulWidget {
+  const TenantAllListings({
+    super.key,
+    required this.textTheme,
+  });
   final TextTheme textTheme;
 
   @override
-  State<AllListings> createState() => _AllListingsState();
+  State<TenantAllListings> createState() => _TenantAllListingsState();
 }
 
-class _AllListingsState extends State<AllListings> {
-  Stream<DocumentSnapshot<Map<String, dynamic>>>? listingStream;
+class _TenantAllListingsState extends State<TenantAllListings> {
   String thisUser = FireAuth.instance.user.uid;
+  Stream<DocumentSnapshot<Map<String, dynamic>>>? favListStream;
 
-  // Future<Future<DocumentSnapshot<Map<String, dynamic>>>>? listings;
+  String? listings_user, address;
 
-  getListings() async {
-    listingStream = (await DatabaseMethods().getListings());
+  getFavListings() async {
+    favListStream = (await DatabaseMethods().getListings());
     // favListStream = await DatabaseMethods().getFavListings(thisUser);
     setState(() {});
   }
 
   onScreenLoaded() async {
-    getListings();
+    getFavListings();
   }
 
   @override
@@ -44,55 +47,64 @@ class _AllListingsState extends State<AllListings> {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
-    // var height = MediaQuery.of(context).size.height;
-    var brightness = MediaQuery.of(context).platformBrightness;
-    final isDark = brightness == Brightness.dark;
     return Scaffold(
-      appBar: AppBarUI('Mr. Gharbeti', true),
+      appBar: AppBarUI('Select Listings', true),
       body: Container(
-          padding: const EdgeInsets.all(30),
-          child: Column(children: [
+        padding: const EdgeInsets.all(30),
+        child: Column(
+          children: [
             Text(
-              'Listings',
+              'Your Rentings',
               style: textTheme.headline2,
             ),
             const SizedBox(
               height: 20,
             ),
             //Search Bar
-            DashboardSearchbarUI(textTheme: textTheme),
-            const SizedBox(
-              height: 20,
-            ),
+
             Expanded(
               child: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-                stream: listingStream,
+                stream: favListStream,
                 builder: (context, snapshot) {
                   return snapshot.hasData
                       ? ListView.builder(
                           primary: false,
                           scrollDirection: Axis.vertical,
-                          // itemCount: snapshot.data.docs.,
                           itemCount: snapshot.data!.data()!.length,
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
                             Map<String, dynamic> data = snapshot.data!.data()!;
+
                             List<dynamic> listings = data['listings'];
 
-                            List filteredListings = listings
+                            List favoriteListings = listings
                                 .where((listing) =>
-                                    listing['rent_user'].length == 0)
-                                // (listing) =>
-                                //     listing['listings_user'] == thisUser)
+                                    listing['rent_user'] == thisUser)
                                 .toList();
-
-                            return AllListingsTile(textTheme, filteredListings);
+                            if (favoriteListings.isEmpty) {
+                              return const Center(
+                                child: Text(
+                                    'You have not been added as tenants to any listings'),
+                              );
+                            } else {
+                              return AllListingsTile(
+                                  textTheme, favoriteListings);
+                            }
+                            // return Center(
+                            //   child: CircularProgressIndicator(),
+                            // );
                           })
-                      : const Center(child: CircularProgressIndicator());
+                      : const Center(
+                          child: CircularProgressIndicator(),
+                        );
                 },
               ),
             ),
-          ])),
+          ],
+        ),
+      ),
+
+      // body: ,
     );
   }
 }
@@ -106,13 +118,9 @@ class AllListingsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AllListingsBookmarkController allListingsBookmarkController = Get.find();
-
-    var list = ds;
     String thisUser = FireAuth.instance.user.uid;
 
-    // var favLists =
-    // var name = widget.ds[2]['listing_address'];
+    var list = ds;
 
     return ListView.builder(
       shrinkWrap: true,
@@ -122,9 +130,8 @@ class AllListingsTile extends StatelessWidget {
       itemBuilder: (context, index) => InkWell(
         // onTap: list[index].onPress,
         onTap: () async {
-          Get.to(() => ListingDetail(textTheme), arguments: list[index]);
-
-          // print(allListingsBookmarkController.favList);
+          Get.to(() => TenantPortal(), arguments: list[index]);
+          // print(list[index]);
         },
         child: Padding(
           padding: const EdgeInsets.only(bottom: 20.0),
@@ -133,13 +140,13 @@ class AllListingsTile extends StatelessWidget {
               Ink(
                 width: 332,
                 height: 200,
-                // padding: const EdgeInsets.only(right: 5, top: 7),
+                padding: const EdgeInsets.only(right: 5, top: 7),
                 decoration: BoxDecoration(
                   color: const Color(0xFFF7F6F1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 18.0),
+                  padding: const EdgeInsets.only(left: 18.0, right: 4),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -164,21 +171,6 @@ class AllListingsTile extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              shape: const CircleBorder(),
-                            ),
-                            onPressed: () async {
-                              allListingsBookmarkController.bookmarkAdd(
-                                  list, index, thisUser);
-                            },
-                            child: list[index]['favorites'][thisUser] == null
-                                ? const Icon(Icons.bookmark_border_outlined)
-                                : list[index]['favorites'][thisUser]
-                                    ? const Icon(Icons.bookmark)
-                                    : const Icon(
-                                        Icons.bookmark_border_outlined),
-                          ),
                           const SizedBox(width: 20),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

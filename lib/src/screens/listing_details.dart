@@ -198,7 +198,9 @@ class _ListingDetailState extends State<ListingDetail> {
             const SizedBox(
               height: 30,
             ),
-            !(thisUser == Get.arguments['listings_user'])
+            // !(thisUser == Get.arguments['listings_user']) ||
+            (((Get.arguments['rent_user'].length == 0)) &&
+                    !(thisUser == Get.arguments['listings_user']))
                 ? Expanded(
                     child: Align(
                       alignment: Alignment.bottomCenter,
@@ -208,8 +210,43 @@ class _ListingDetailState extends State<ListingDetail> {
                           SizedBox(
                             width: 240,
                             child: ElevatedButton(
-                              onPressed: () {
+                              onPressed: () async {
                                 // print();
+                                // await FirebaseFirestore.instance
+                                //     .collection("listings")
+                                //     .doc("all_listings")
+                                //     .update({
+                                //   "listings.0.rent_requests":
+                                //       FieldValue.arrayUnion(
+                                //           ["F48cIi8OrNa7m8gchYFBjSvgwsR2"])
+                                // });
+                                await FirebaseFirestore.instance
+                                    .collection("listings")
+                                    .doc("all_listings")
+                                    .get()
+                                    .then((documentSnapshot) async {
+                                  var listings =
+                                      documentSnapshot.data()!['listings'];
+                                  var index = listings.indexWhere((listing) =>
+                                      // listing["favorites"] == fav &&
+                                      listing["listing_id"] ==
+                                      arguments['listing_id']);
+
+                                  if (index != -1) {
+                                    if (listings[index]['rent_requests']
+                                        .contains(thisUser)) {
+                                      print('');
+                                    } else {
+                                      listings[index]['rent_requests']
+                                          .add(thisUser);
+                                    }
+                                    // FieldValue.arrayUnion([thisUser]);
+                                  }
+                                  return FirebaseFirestore.instance
+                                      .collection("listings")
+                                      .doc("all_listings")
+                                      .update({"listings": listings});
+                                });
                               },
                               child: const Text('Rent'),
                             ),
@@ -251,7 +288,12 @@ class _ListingDetailState extends State<ListingDetail> {
                       ),
                     ),
                   )
-                : const Text('')
+                : const Text(
+                    'This listing is not available to rent. So, it will not be shown on ecommerce page',
+                    style: TextStyle(
+                      color: Colors.red,
+                    ),
+                  )
           ],
         ),
       ),

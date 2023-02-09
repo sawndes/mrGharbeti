@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mr_gharbeti/src/models/user_model.dart';
 import 'package:mr_gharbeti/src/screens/all_listings.dart';
+import 'package:mr_gharbeti/src/screens/manage_all_listings.dart';
 import 'package:mr_gharbeti/src/screens/search_page.dart';
 import 'package:mr_gharbeti/src/widgets/firestore/user_firestore.dart';
+
+import '../../screens/tenant_all_listings.dart';
+import '../auth_sign_in_btn_widget.dart';
 
 class DashboardBannerUI extends StatefulWidget {
   const DashboardBannerUI({
@@ -63,9 +67,58 @@ class _DashboardBannerUIState extends State<DashboardBannerUI> {
             title: 'Manage your tenant here',
             paddingVertical: 20,
             onTap: () {
-              // Get.to(() => CustomIndicator());
-              //       textTheme: widget.textTheme,
-              //     ));
+              showModalBottomSheet(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                context: context,
+                builder: (context) => Container(
+                  padding: const EdgeInsets.all(30),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Make Selection',
+                        style: Theme.of(context).textTheme.headline2,
+                      ),
+                      Text(
+                        style: Theme.of(context).textTheme.bodyText1,
+                        'Select one of the options given below to go to portals',
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      SignInAllButtons(
+                        btnIcon: Icons.manage_accounts,
+                        title: 'Landlord',
+                        subtitle: 'Go to landlord Portal',
+                        onTap: () {
+                          Get.to(() => ManageAllListings(
+                                textTheme: widget.textTheme,
+                              ));
+                          // print('dsasd');
+                          // FireAuth().signInWithGoogle();
+                          // Navigator.of(context).pop();
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //     builder: (context) => ForgotPasswordMailScreen()));
+                        },
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      SignInAllButtons(
+                        btnIcon: Icons.people_sharp,
+                        title: 'Tenant',
+                        subtitle: 'Go to tenant Portal',
+                        onTap: () {
+                          Get.to(() =>
+                              TenantAllListings(textTheme: widget.textTheme));
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              );
             },
           ),
         ),

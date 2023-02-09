@@ -105,6 +105,8 @@ class _BookmarkListingsState extends State<BookmarkListings> {
                             List favoriteListings = listings
                                 .where(
                                     (listing) => listing['favorites'][thisUser])
+                                // (listing) =>
+                                //     listing['listings_user'] == thisUser)
                                 .toList();
 
                             // if (favoriteListings.isEmpty) {

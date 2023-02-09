@@ -26,7 +26,15 @@ class _AddListingsPageState extends State<AddListingsPage> {
     XFile? image;
     List<XFile>? imagefiles;
     if (isCamera) {
-      image = await _picker.pickImage(source: ImageSource.camera);
+      List<XFile>? image =
+          (await _picker.pickImage(source: ImageSource.camera)) as List<XFile>?;
+      if (image != null) {
+        // imagefiles!.add(image);
+        imagefiles = image;
+        setState(() {});
+      } else {
+        print("No image is selected.");
+      }
       // _picker.pickMultiImage()
       // imagecourse
     } else {
