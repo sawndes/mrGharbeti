@@ -199,101 +199,115 @@ class _ListingDetailState extends State<ListingDetail> {
               height: 30,
             ),
             // !(thisUser == Get.arguments['listings_user']) ||
-            (((Get.arguments['rent_user'].length == 0)) &&
-                    !(thisUser == Get.arguments['listings_user']))
-                ? Expanded(
-                    child: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Row(
-                        // mainAxisAlignment: MainAxisAlignment,
-                        children: [
-                          SizedBox(
-                            width: 240,
-                            child: ElevatedButton(
-                              onPressed: () async {
-                                // print();
-                                // await FirebaseFirestore.instance
-                                //     .collection("listings")
-                                //     .doc("all_listings")
-                                //     .update({
-                                //   "listings.0.rent_requests":
-                                //       FieldValue.arrayUnion(
-                                //           ["F48cIi8OrNa7m8gchYFBjSvgwsR2"])
-                                // });
-                                await FirebaseFirestore.instance
-                                    .collection("listings")
-                                    .doc("all_listings")
-                                    .get()
-                                    .then((documentSnapshot) async {
-                                  var listings =
-                                      documentSnapshot.data()!['listings'];
-                                  var index = listings.indexWhere((listing) =>
-                                      // listing["favorites"] == fav &&
-                                      listing["listing_id"] ==
-                                      arguments['listing_id']);
+            if (((Get.arguments['rent_user'].length == 0)) &&
+                !(thisUser == Get.arguments['listings_user'])) ...[
+              // ?
+              Expanded(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Row(
+                    // mainAxisAlignment: MainAxisAlignment,
+                    children: [
+                      SizedBox(
+                        width: 240,
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            await FirebaseFirestore.instance
+                                .collection("listings")
+                                .doc("all_listings")
+                                .get()
+                                .then((documentSnapshot) async {
+                              var listings =
+                                  documentSnapshot.data()!['listings'];
+                              var index = listings.indexWhere((listing) =>
+                                  // listing["favorites"] == fav &&
+                                  listing["listing_id"] ==
+                                  arguments['listing_id']);
 
-                                  if (index != -1) {
-                                    if (listings[index]['rent_requests']
-                                        .contains(thisUser)) {
-                                      print('');
-                                    } else {
-                                      listings[index]['rent_requests']
-                                          .add(thisUser);
-                                    }
-                                    // FieldValue.arrayUnion([thisUser]);
-                                  }
-                                  return FirebaseFirestore.instance
-                                      .collection("listings")
-                                      .doc("all_listings")
-                                      .update({"listings": listings});
-                                });
-                              },
-                              child: const Text('Rent'),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          SizedBox(
-                            width: 100,
-                            child: OutlinedButton(
-                              onPressed: () {
-                                print(arguments['listings_user']);
-
-                                var chatRoomId = getChatRoomIdByUsernames(
-                                  thisUser,
-                                  arguments['listings_user'],
+                              if (index != -1) {
+                                if (listings[index]['rent_requests']
+                                    .contains(thisUser)) {
+                                  print('');
+                                } else {
+                                  listings[index]['rent_requests']
+                                      .add(thisUser);
+                                }
+                                // FieldValue.arrayUnion([thisUser]);
+                              }
+                              return FirebaseFirestore.instance
+                                  .collection("listings")
+                                  .doc("all_listings")
+                                  .update({"listings": listings});
+                            });
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text("Request sent"),
+                                  content: Text(
+                                      "Your request has been sent to the listing owner."),
+                                  actions: <Widget>[
+                                    ElevatedButton(
+                                      child: Text("OK"),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
                                 );
-                                Map<String, dynamic> chatRoomInfoMap = {
-                                  "users": [
-                                    thisUser,
-                                    arguments['listings_user']
-                                  ]
-                                };
-
-                                DatabaseMethods().createChatRoom(
-                                    chatRoomId, chatRoomInfoMap);
-
-                                Get.to(() => FinalChatScreen(), arguments: [
-                                  profilePicUrl,
-                                  name,
-                                  arguments['listings_user'],
-                                  chatRoomId
-                                ]);
                               },
-                              child: const Text('Chat'),
-                            ),
-                          ),
-                        ],
+                            );
+                          },
+                          child: const Text('Rent'),
+                        ),
                       ),
-                    ),
-                  )
-                : const Text(
-                    'This listing is not available to rent. So, it will not be shown on ecommerce page',
-                    style: TextStyle(
-                      color: Colors.red,
-                    ),
-                  )
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      SizedBox(
+                        width: 100,
+                        child: OutlinedButton(
+                          onPressed: () {
+                            print(arguments['listings_user']);
+
+                            var chatRoomId = getChatRoomIdByUsernames(
+                              thisUser,
+                              arguments['listings_user'],
+                            );
+                            Map<String, dynamic> chatRoomInfoMap = {
+                              "users": [thisUser, arguments['listings_user']]
+                            };
+
+                            DatabaseMethods()
+                                .createChatRoom(chatRoomId, chatRoomInfoMap);
+
+                            Get.to(() => FinalChatScreen(), arguments: [
+                              profilePicUrl,
+                              name,
+                              arguments['listings_user'],
+                              chatRoomId
+                            ]);
+                          },
+                          child: const Text('Chat'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ]
+
+            // :
+            else if ((thisUser == Get.arguments['listings_user'])) ...[
+              const Text('')
+            ] else ...[
+              const Text(
+                'This listing is not available to rent. So, it will not be shown on ecommerce page',
+                style: TextStyle(
+                  color: Colors.red,
+                ),
+              )
+            ]
           ],
         ),
       ),

@@ -26,15 +26,17 @@ class _AddListingsPageState extends State<AddListingsPage> {
     XFile? image;
     List<XFile>? imagefiles;
     if (isCamera) {
-      List<XFile>? image =
-          (await _picker.pickImage(source: ImageSource.camera)) as List<XFile>?;
-      if (image != null) {
-        // imagefiles!.add(image);
-        imagefiles = image;
-        setState(() {});
-      } else {
-        print("No image is selected.");
-      }
+      // List<XFile>? camPhoto;
+      // image = (await _picker.pickImage(source: ImageSource.camera));
+      // camPhoto!.add(image!);
+      // if (image != null) {
+      //   // imagefiles!.add(image);
+      //   imagefiles = camPhoto;
+      //   // imagefiles = image;
+      //   setState(() {});
+      // } else {
+      //   print("No image is selected.");
+      // }
       // _picker.pickMultiImage()
       // imagecourse
     } else {
@@ -53,18 +55,6 @@ class _AddListingsPageState extends State<AddListingsPage> {
     });
   }
 
-  // Future<String> _uploadImage(File? imageFile) async {
-  //   String fileName = DateTime.now().millisecondsSinceEpoch.toString();
-
-  //   final storageRef = FirebaseStorage.instance.ref().child(fileName);
-  //   // print(imageFile);
-  //   await storageRef.putFile(imageFile!);
-  //   // // await uploadTask.then(()=>);
-  //   String imageURL = await storageRef.getDownloadURL();
-  //   imgUrl = imageURL;
-  //   return imageURL;
-  //   // ...
-  // }
   Future<List<String>> _uploadImages(List<File> imageFiles) async {
     if (imageFiles == null) return [];
     List<String> imageURLs = [];
@@ -194,18 +184,19 @@ class _AddListingsPageState extends State<AddListingsPage> {
                                       context: context,
                                       builder: (BuildContext context) {
                                         return Container(
-                                          height: 150,
+                                          height: 80,
                                           child: Column(
                                             children: <Widget>[
-                                              ListTile(
-                                                leading: Icon(Icons.camera_alt),
-                                                title: Text('Take a photo'),
-                                                onTap: () {
-                                                  getImage(true);
-                                                  // _pickImage(ImageSource.camera);
-                                                  Navigator.pop(context);
-                                                },
-                                              ),
+                                              // ListTile(
+                                              //   leading: Icon(Icons.camera_alt),
+                                              //   title: Text('Take a photo'),
+                                              //   onTap: () {
+                                              //     getImage(true);
+                                              //     // _pickImage(ImageSource.camera);
+                                              //     Navigator.pop(context);
+                                              //   },
+                                              // ),
+
                                               ListTile(
                                                 leading:
                                                     Icon(Icons.photo_library),

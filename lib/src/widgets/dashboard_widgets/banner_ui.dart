@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:mr_gharbeti/src/models/user_model.dart';
 import 'package:mr_gharbeti/src/screens/all_listings.dart';
+import 'package:mr_gharbeti/src/screens/listing_details.dart';
 import 'package:mr_gharbeti/src/screens/manage_all_listings.dart';
 import 'package:mr_gharbeti/src/screens/search_page.dart';
 import 'package:mr_gharbeti/src/widgets/firestore/user_firestore.dart';
@@ -24,18 +26,22 @@ class DashboardBannerUI extends StatefulWidget {
 }
 
 class _DashboardBannerUIState extends State<DashboardBannerUI> {
-  String listing_name = '', address = '';
+  String listing_name = 'NO LISTINGS', address = 'NO LISTINGS';
   List? infoListings;
 
   Future<List?> retrieveDescription() async {
     List listings;
+    List? x;
     await FirebaseFirestore.instance
         .collection("listings")
         .doc("all_listings")
         .get()
         .then((documentSnapshot) {
-      listings = documentSnapshot.data()!['listings'];
-
+      listings = documentSnapshot.data()!['listings'].toList();
+      listings =
+          listings.where((listing) => listing['rent_user'] == '').toList();
+      // .where((listing) => listing['rent_user'].length == 0);
+      infoListings = listings;
       listing_name = listings[0]['listing_name'];
       address = listings[0]['listing_address'];
       // return documentSnapshot.data()!['listings'];
@@ -129,9 +135,13 @@ class _DashboardBannerUIState extends State<DashboardBannerUI> {
             children: [
               //Card
               MainViewApartment(
+                  // photoUrl: infoListings![0]['listing_photo'][0],
                   listingName: listing_name,
                   address: address,
-                  onTap: () {},
+                  onTap: () {
+                    Get.to(() => ListingDetail(widget.textTheme),
+                        arguments: infoListings![0]);
+                  },
                   textTheme: widget.textTheme,
                   paddingVertical: 7),
 
@@ -194,11 +204,15 @@ class ManageYourTenantButton extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Flexible(
-                  child:
-                      // Icon(Icons.house)
-                      Image(
-                    image: btnIcon,
+                  child: Lottie.asset(
+                    alignment: Alignment.center,
+                    'animation/manage_animation.json',
+                    height: 150,
                   ),
+                  // Icon(Icons.house)
+                  //     Image(
+                  //   image: btnIcon,
+                  // ),
                 ),
               ],
             ),
@@ -224,6 +238,7 @@ class MainViewApartment extends StatelessWidget {
     // required this.btnIcon,
     required this.listingName,
     required this.address,
+    // required this.photoUrl,
     // required this.subtitle,
     required this.onTap,
     required this.textTheme,
@@ -232,6 +247,7 @@ class MainViewApartment extends StatelessWidget {
   }) : super(key: key);
   final TextTheme textTheme;
   final double paddingVertical;
+  // final String photoUrl;
   // final AssetImage btnIcon;
   final String listingName, address;
   final VoidCallback onTap;
@@ -253,11 +269,15 @@ class MainViewApartment extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
+              children: [
                 // Flexible(child: Icon(Icons.bookmark_border)),
                 Flexible(
-                    child:
-                        Image(image: AssetImage('assets/images/login_ui.png'))),
+                  child: Lottie.asset(
+                    alignment: Alignment.center,
+                    'animation/house_animation.json',
+                    height: 150,
+                  ),
+                ),
               ],
             ),
             Text(listingName,
