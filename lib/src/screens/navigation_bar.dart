@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:line_icons/line_icon.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:mr_gharbeti/src/controller/bottom_navigation_controller.dart';
 import 'package:mr_gharbeti/src/screens/add_listings.dart';
@@ -10,7 +9,6 @@ import 'package:mr_gharbeti/src/screens/dashboard.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 import '../controller/all_listings_bookmark_controller.dart';
-import '../widgets/authentication/fire_auth.dart';
 
 class NavigationPage extends StatelessWidget {
   // NavigationPage({super.key});
@@ -41,7 +39,7 @@ class NavigationPage extends StatelessWidget {
         () => GNav(
           backgroundColor: Colors.white,
           iconSize: 22,
-          gap: 10,
+          gap: 30,
           color: Colors.grey.shade500,
           rippleColor: Colors.black,
           haptic: true,
@@ -61,7 +59,7 @@ class NavigationPage extends StatelessWidget {
           tabs: const [
             GButton(
               icon: LineIcons.home,
-              text: 'Home',
+              // text: 'Home',
               textStyle: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
@@ -69,15 +67,15 @@ class NavigationPage extends StatelessWidget {
             ),
             GButton(
               icon: LineIcons.sms,
-              text: 'Chat',
+              // text: 'Chat',
             ),
             GButton(
               icon: LineIcons.plus,
-              text: 'Add Listings',
+              // text: 'Add Listings',
             ),
             GButton(
               icon: LineIcons.bookmark,
-              text: 'Favorites',
+              // text: 'Favorites',
             )
           ],
           // BottomNavigationBar(

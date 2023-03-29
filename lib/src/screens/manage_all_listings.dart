@@ -275,7 +275,7 @@ class _AllListingsTileState extends State<AllListingsTile> {
                                     'Name',
                                     style: TextStyle(
                                       fontSize: 22,
-                                      fontWeight: FontWeight.bold,
+                                      // fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),
@@ -283,7 +283,7 @@ class _AllListingsTileState extends State<AllListingsTile> {
                                   'Accept/Decline',
                                   style: TextStyle(
                                     fontSize: 22,
-                                    fontWeight: FontWeight.bold,
+                                    // fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               ],
@@ -305,6 +305,7 @@ class _AllListingsTileState extends State<AllListingsTile> {
                                       icon: const Icon(
                                         Icons.check,
                                         size: 30,
+                                        color: Colors.green,
                                       ),
                                       onPressed: () {
                                         acceptOffer() async {
@@ -359,6 +360,7 @@ class _AllListingsTileState extends State<AllListingsTile> {
                                       icon: const Icon(
                                         Icons.clear,
                                         size: 30,
+                                        color: Colors.red,
                                       ),
                                       onPressed: () async {
                                         declineOffer() async {

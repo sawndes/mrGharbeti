@@ -243,8 +243,8 @@ class _ListingDetailState extends State<ListingDetail> {
                               context: context,
                               builder: (BuildContext context) {
                                 return AlertDialog(
-                                  title: Text("Request sent"),
-                                  content: Text(
+                                  title: const Text("Request sent"),
+                                  content: const Text(
                                       "Your request has been sent to the listing owner."),
                                   actions: <Widget>[
                                     ElevatedButton(
@@ -300,14 +300,15 @@ class _ListingDetailState extends State<ListingDetail> {
             // :
             else if ((thisUser == Get.arguments['listings_user'])) ...[
               const Text('')
-            ] else ...[
+            ] else if ((thisUser == Get.arguments['listings_user']) &&
+                !(Get.arguments['rent_user'].length == 0)) ...[
               const Text(
                 'This listing is not available to rent. So, it will not be shown on ecommerce page',
                 style: TextStyle(
                   color: Colors.red,
                 ),
               )
-            ]
+            ],
           ],
         ),
       ),

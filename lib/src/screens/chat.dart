@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:mr_gharbeti/src/widgets/authentication/database_methods.dart';
 import 'package:mr_gharbeti/src/widgets/chat/chat_screen_final.dart';
 
-import '../models/chat_model.dart';
 import 'package:get/get.dart';
 
 import '../widgets/authentication/fire_auth.dart';
@@ -118,7 +117,10 @@ class _ChatPageState extends State<ChatPage> {
     String thisUser = FireAuth.instance.user.uid;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF7F6F1),
+        // backgroundColor: const Color(0xFFF7F6F1),
+        // backgroundColor: Color.fromRGBO(164, 198, 57, 100),
+        backgroundColor: const Color(0xFF00BF6D).withOpacity(0.9),
+
         elevation: 0,
         automaticallyImplyLeading: false,
         toolbarHeight: 70,
@@ -132,110 +134,6 @@ class _ChatPageState extends State<ChatPage> {
         ),
       ),
       body: chatRoomsList(),
-      // body: Column(
-      //   children: [
-      //     Expanded(
-      //       child: ListView.builder(
-      //         itemCount: chatsData.length,
-      //         itemBuilder: (context, index) => InkWell(
-      //           onTap: () {
-      //             var chatRoomId = getChatRoomIdByUsernames(
-      //               thisUser,
-      //               '21GJW3e0UpUkQdOx5H6iWaDdyLt1',
-      //               // '6sXzuLh673UHiZOEpNXfUUgawV92',
-      //             );
-      //             Map<String, dynamic> chatRoomInfoMap = {
-      //               "users": [
-      //                 thisUser,
-      //                 // '6sXzuLh673UHiZOEpNXfUUgawV92',
-      //                 '21GJW3e0UpUkQdOx5H6iWaDdyLt1',
-      //               ]
-      //             };
-      //             // Get.to(() => ChatMessageScreen(),
-      //             //     arguments: chatsData[index]);
-      //             DatabaseMethods().createChatRoom(chatRoomId, chatRoomInfoMap);
-      //             Get.to(() => const FinalChatScreen(), arguments: [
-      //               'Sawndes',
-      //               '21GJW3e0UpUkQdOx5H6iWaDdyLt1',
-
-      //               //                       '6sXzuLh673UHiZOEpNXfUUgawV92',
-      //               // '6sXzuLh673UHiZOEpNXfUUgawV92',
-      //               'https://lh3.googleusercontent.com/a/AEdFTp6gxx6_kIwOlyuMuHuLV3FmwI-b9wWH12x8eb_tFM4=s96-c',
-      //             ]);
-      //           },
-      //           child: Padding(
-      //             padding: const EdgeInsets.symmetric(
-      //               horizontal: 20,
-      //               vertical: 15,
-      //             ),
-      //             child: Row(
-      //               children: [
-      //                 Stack(
-      //                   children: [
-      //                     CircleAvatar(
-      //                       radius: 24,
-      //                       backgroundImage: AssetImage(chatsData[index].image),
-      //                     ),
-      //                     if (chatsData[index].isActive)
-      //                       Positioned(
-      //                         right: 0,
-      //                         bottom: 0,
-      //                         child: Container(
-      //                           height: 16,
-      //                           width: 16,
-      //                           decoration: BoxDecoration(
-      //                               color: const Color(0xFF00BF6D),
-      //                               shape: BoxShape.circle,
-      //                               border: Border.all(
-      //                                 color: Colors.white,
-      //                                 width: 3,
-      //                               )),
-      //                         ),
-      //                       )
-      //                   ],
-      //                 ),
-
-      //                   child: Padding(
-      //                     padding: const EdgeInsets.symmetric(horizontal: 20),
-      //                     child: Column(
-      //                       crossAxisAlignment: CrossAxisAlignment.start,
-      //                       children: [
-      //                         Text(
-      //                           chatsData[index].name,
-      //                           style: const TextStyle(
-      //                             fontSize: 16,
-      //                             fontWeight: FontWeight.w500,
-      //                           ),
-      //                         ),
-      //                         const SizedBox(
-      //                           height: 8,
-      //                         ),
-      //                         Opacity(
-      //                           opacity: 0.64,
-      //                           child: Text(
-      //                             chatsData[index].lastMessage,
-      //                             maxLines: 1,
-      //                             overflow: TextOverflow.ellipsis,
-      //                           ),
-      //                         )
-      //                       ],
-      //                     ),
-      //                   ),
-      //                 ),
-      //                 Opacity(
-      //                   opacity: 0.64,
-      //                   child: Text(
-      //                     chatsData[index].time,
-      //                   ),
-      //                 )
-      //               ],
-      //             ),
-      //           ),
-      //         ),
-      //       ),
-      //     ),
-      //   ],
-      // ),
     );
   }
 }

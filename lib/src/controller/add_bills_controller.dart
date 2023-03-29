@@ -1,22 +1,19 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-
+import 'package:random_string/random_string.dart';
 import '../widgets/authentication/database_methods.dart';
 import '../widgets/authentication/fire_auth.dart';
-import 'package:random_string/random_string.dart';
 
-class AddListingsController extends GetxController {
-  static AddListingsController get instance => Get.find();
+class AddBillsController extends GetxController {
+  static AddBillsController get instance => Get.find();
   final title = TextEditingController();
   final price = TextEditingController();
   final address = TextEditingController();
   final description = TextEditingController();
   String thisUser = FireAuth.instance.user.uid;
-
   Future<Map<String, bool>> getUserMap() async {
     final Map<String, bool> userMap = {};
 
@@ -51,10 +48,9 @@ class AddListingsController extends GetxController {
     return imageURL;
   }
 
-  addListings(
+  addBills(
     TextEditingController title,
     TextEditingController price,
-    TextEditingController address,
     TextEditingController description,
     List<String> img,
   ) async {
@@ -63,21 +59,17 @@ class AddListingsController extends GetxController {
     // final imgUrl = _uploadImage(img);
 
     Map<String, dynamic> listingsData = {
-      "listing_name": title.text.trim(),
-      "listing_price": price.text.trim(),
+      "bill_name": title.text.trim(),
+      "bill_price": price.text.trim(),
       "description": description.text.trim(),
-      "listing_address": address.text.trim(),
-      "listing_photo": img,
+      "bill_photo": img,
       "listings_user": thisUser,
-      "favorites": userMap,
-      "rent_user": '',
-      "rent_requests": []
 
       // {
       //   '6sXzuLh673UHiZOEpNXfUUgawV92': false,
       //   'hahaha': false,
       // }
-      ,
+
       // "listing_id": thisUser + '_' + randomAlphaNumeric(12)
       "listing_id": listingId
     };
@@ -87,7 +79,7 @@ class AddListingsController extends GetxController {
     price.clear();
     address.clear();
     description.clear();
-    Get.snackbar('Added', 'Listings added sucessfully');
+    Get.snackbar('Added', 'Bills added sucessfully');
   }
 
   addfavoritesListings() {}

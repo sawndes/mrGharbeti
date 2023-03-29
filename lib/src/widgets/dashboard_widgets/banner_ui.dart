@@ -143,24 +143,9 @@ class _DashboardBannerUIState extends State<DashboardBannerUI> {
                         arguments: infoListings![0]);
                   },
                   textTheme: widget.textTheme,
-                  paddingVertical: 7),
+                  paddingVertical: 35),
 
               const SizedBox(height: 5),
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: OutlinedButton(
-                    onPressed: () {
-                      Get.to(() => AllListings(
-                            textTheme: widget.textTheme,
-                          ));
-                    },
-                    child: const Text('View All Listings'),
-                  ),
-                ),
-              ),
             ],
           ),
         ),

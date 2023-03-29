@@ -3,19 +3,20 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mr_gharbeti/src/controller/add_bills_controller.dart';
 import 'package:mr_gharbeti/src/widgets/authentication/fire_auth.dart';
 import '../controller/add_listings_controller.dart';
 import '../widgets/dashboard_widgets/appBar_ui.dart';
 import 'package:image_picker/image_picker.dart';
 
-class AddListingsPage extends StatefulWidget {
-  const AddListingsPage({super.key});
+class AddBillsPage extends StatefulWidget {
+  const AddBillsPage({super.key});
 
   @override
-  State<AddListingsPage> createState() => _AddListingsPageState();
+  State<AddBillsPage> createState() => _AddBillsPageState();
 }
 
-class _AddListingsPageState extends State<AddListingsPage> {
+class _AddBillsPageState extends State<AddBillsPage> {
   final ImagePicker _picker = ImagePicker();
   File? _image;
   String? imgUrl;
@@ -76,7 +77,7 @@ class _AddListingsPageState extends State<AddListingsPage> {
     String thisUser = FireAuth.instance.user.uid;
     final size = MediaQuery.of(context).size;
     GlobalKey<FormState> _formKey = GlobalKey();
-    final controller = Get.put(AddListingsController());
+    final controller = Get.put(AddBillsController());
     return Scaffold(
         appBar: AppBarUI('Add your listings', false),
         body: SingleChildScrollView(
@@ -104,7 +105,7 @@ class _AddListingsPageState extends State<AddListingsPage> {
                                 text: const TextSpan(
                                   children: [
                                     TextSpan(
-                                        text: 'Title',
+                                        text: 'Bill Title',
                                         style: TextStyle(color: Colors.black)),
                                     TextSpan(
                                         text: ' *',
@@ -127,28 +128,12 @@ class _AddListingsPageState extends State<AddListingsPage> {
                           TextFormField(
                             controller: controller.price,
                             decoration: const InputDecoration(
-                              label: Text('Price per month'),
+                              label: Text('Bill amount'),
                               prefixIcon: Icon(Icons.attach_money_outlined),
                             ),
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return 'Please enter the title';
-                              }
-                              return null;
-                            },
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          TextFormField(
-                            controller: controller.address,
-                            decoration: const InputDecoration(
-                              label: Text('Address'),
-                              prefixIcon: Icon(Icons.location_city),
-                            ),
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Please enter the title';
+                                return 'Please enter the amount';
                               }
                               return null;
                             },
@@ -161,12 +146,12 @@ class _AddListingsPageState extends State<AddListingsPage> {
                             maxLines: null,
                             controller: controller.description,
                             decoration: const InputDecoration(
-                              label: Text('Description'),
+                              label: Text('Bill Description'),
                               prefixIcon: Icon(Icons.description),
                             ),
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return 'Please enter the title';
+                                return 'Please enter the Description';
                               }
                               return null;
                             },
@@ -239,10 +224,15 @@ class _AddListingsPageState extends State<AddListingsPage> {
                                   // print(imgUrl);
                                   if (_formKey.currentState!.validate()) {
                                     _formKey.currentState!.save();
-                                    AddListingsController.instance.addListings(
+                                    // AddListingsController.instance.addListings(
+                                    //   controller.title,
+                                    //   controller.price,
+                                    //   controller.description,
+                                    //   imgUrls!,
+                                    // );
+                                    AddBillsController.instance.addBills(
                                       controller.title,
                                       controller.price,
-                                      controller.address,
                                       controller.description,
                                       imgUrls!,
                                     );
@@ -267,7 +257,7 @@ class _AddListingsPageState extends State<AddListingsPage> {
                         ],
                       ),
                     ),
-                  ),
+                  )
                 ],
               )
             ],

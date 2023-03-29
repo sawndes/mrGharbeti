@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 import '../widgets/authentication/database_methods.dart';
 import '../widgets/authentication/fire_auth.dart';
@@ -82,6 +83,7 @@ class _TenantPortalState extends State<TenantPortal> {
                   //1st banner
                   Expanded(
                     child: ManageYourTenantButton(
+                      animation_name: 'bills-animation.json',
                       textTheme: textTheme,
                       btnIcon: AssetImage('assets/images/login_ui.png'),
                       title: 'View bills',
@@ -93,6 +95,7 @@ class _TenantPortalState extends State<TenantPortal> {
                   //2nd Banner
                   Expanded(
                     child: ManageYourTenantButton(
+                      animation_name: 'ecommerce-animation.json',
                       textTheme: textTheme,
                       btnIcon: AssetImage('assets/images/login_ui.png'),
                       title: 'View Listing',
@@ -114,6 +117,7 @@ class _TenantPortalState extends State<TenantPortal> {
                 children: [
                   Expanded(
                     child: ManageYourTenantButton(
+                      animation_name: 'chat-animation.json',
                       textTheme: textTheme,
                       btnIcon: AssetImage('assets/images/login_ui.png'),
                       title: 'Chat with Landlord',
@@ -143,6 +147,7 @@ class _TenantPortalState extends State<TenantPortal> {
                   Expanded(
                     child: ManageYourTenantButton(
                       textTheme: textTheme,
+                      animation_name: 'notifications-animation.json',
                       btnIcon: AssetImage('assets/images/login_ui.png'),
                       title: 'All Notifications',
                       paddingVertical: 20,
@@ -166,6 +171,7 @@ class ManageYourTenantButton extends StatelessWidget {
     required this.title,
     required this.paddingVertical,
     // required this.subtitle,
+    required this.animation_name,
     required this.onTap,
     required this.textTheme,
     Key? key,
@@ -174,6 +180,7 @@ class ManageYourTenantButton extends StatelessWidget {
   final double paddingVertical;
   final AssetImage btnIcon;
   final String title;
+  final String animation_name;
   final VoidCallback onTap;
 
   @override
@@ -195,12 +202,18 @@ class ManageYourTenantButton extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Flexible(
-                  child:
-                      // Icon(Icons.house)
-                      Image(
-                    image: btnIcon,
-                  ),
-                ),
+                    child:
+                        // Icon(Icons.house)
+                        Lottie.asset(
+                  alignment: Alignment.center,
+                  // 'animation/manage_animation.json',
+                  'animation/$animation_name',
+                  height: 150,
+                )
+                    //     Image(
+                    //   image: btnIcon,
+                    // ),
+                    ),
               ],
             ),
             const SizedBox(height: 25),

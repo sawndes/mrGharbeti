@@ -35,7 +35,7 @@ class AppBarUI extends StatelessWidget implements PreferredSizeWidget {
         ),
         elevation: 0,
         centerTitle: true,
-        backgroundColor: Colors.transparent,
+        backgroundColor: const Color(0xFF00BF6D).withOpacity(0.9),
         // leading: Icon(
         //   Icons.menu,
         //   //For Dark Color
@@ -48,7 +48,9 @@ class AppBarUI extends StatelessWidget implements PreferredSizeWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               //For Dark Color
-              color: isDark ? const Color(0xFF272727) : const Color(0xFFF7F6F1),
+              color: isDark
+                  ? const Color(0xFF272727)
+                  : Color(0xFF00BF6D).withOpacity(0.9),
             ),
             child: IconButton(
               onPressed: () {
@@ -73,7 +75,7 @@ class AppBarUI extends StatelessWidget implements PreferredSizeWidget {
         // ),
         elevation: 0,
         centerTitle: true,
-        backgroundColor: Colors.transparent,
+        backgroundColor: Color(0xFF00BF6D).withOpacity(0.9),
         // leading: Icon(
         //   Icons.menu,
         //   //For Dark Color
@@ -86,7 +88,9 @@ class AppBarUI extends StatelessWidget implements PreferredSizeWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               //For Dark Color
-              color: isDark ? const Color(0xFF272727) : const Color(0xFFF7F6F1),
+              color: isDark
+                  ? const Color(0xFF272727)
+                  : Color(0xFF00BF6D).withOpacity(0.9),
             ),
             child: IconButton(
               onPressed: () {

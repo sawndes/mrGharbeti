@@ -182,7 +182,7 @@ class _FinalChatScreenState extends State<FinalChatScreen> {
             color: Colors.black,
           ),
         ),
-        backgroundColor: const Color(0xFFF7F6F1),
+        backgroundColor: const Color(0xFF00BF6D).withOpacity(0.9),
         elevation: 0,
         automaticallyImplyLeading: false,
         toolbarHeight: 70,
@@ -258,10 +258,15 @@ class _FinalChatScreenState extends State<FinalChatScreen> {
                       onTap: () {
                         addMessage(true);
                       },
-                      child: const Icon(
-                        Icons.send,
-                        // color: Colors.white,
-                        color: Colors.grey,
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.send,
+                        ),
+                        onPressed: () {
+                          addMessage(true);
+                        },
+                        color: Colors.black,
+                        // color: Colors.grey,
                       ),
                     )
                   ],

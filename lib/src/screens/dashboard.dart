@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+import 'package:mr_gharbeti/src/screens/all_listings.dart';
 import 'package:mr_gharbeti/src/widgets/firestore/user_firestore.dart';
 import '../controller/profile_controller.dart';
 import '../widgets/authentication/fire_auth.dart';
@@ -44,9 +44,31 @@ class _DashBoardState extends State<DashBoard> {
                 'Welcome to Dashboard',
                 style: textTheme.bodyText2,
               ),
-              Text(
-                'Explore Listings',
-                style: textTheme.headline2,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    'Explore Listings',
+                    style: textTheme.headline2,
+                  ),
+                  const SizedBox(
+                    width: 22,
+                  ),
+                  TextButton(
+                    // style: ButtonStyle(colo),
+                    onPressed: () {
+                      Get.to(() => AllListings(
+                            textTheme: textTheme,
+                          ));
+                    },
+
+                    child: Text(
+                      'View All Listings',
+                      // style: TextStyle(color: Colors.black),
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                  )
+                ],
               ),
               const SizedBox(
                 height: 20,

@@ -182,6 +182,39 @@ class DatabaseMethods {
     }
   }
 
+  Future addBills(String uid, Map<String, dynamic> listingsInfoMap) async {
+    final QuerySnapshot qSnap =
+        await FirebaseFirestore.instance.collection('bills').get();
+    final int documents = qSnap.docs.length + 1;
+
+    final snapShot = await FirebaseFirestore.instance
+        .collection("bills")
+        .doc('all_bills')
+        .get();
+    // .set(firstTimeListingsInfo);
+
+    if (snapShot.exists) {
+      // listings has been added before already exists
+      return FirebaseFirestore.instance.collection("bills").doc('all_bills')
+          // .collection('listings')
+          // .doc(documents.toString())
+
+          .update({
+        'bills': FieldValue.arrayUnion([listingsInfoMap])
+      });
+      // return true;
+    } else {
+      // chatroom does not exists
+      return FirebaseFirestore.instance
+          .collection("bills")
+          .doc('all_bills')
+          .set({
+        'bills': FieldValue.arrayUnion([listingsInfoMap])
+      });
+      // .set(listingsInfoMap);
+    }
+  }
+
   updateLastMessageSend(
       String chatRoomId, Map<String, dynamic> lastMessageInfoMap) {
     return FirebaseFirestore.instance

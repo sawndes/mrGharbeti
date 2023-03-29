@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:lottie/lottie.dart';
+import 'package:mr_gharbeti/src/screens/bills_landlord.dart';
 import '../widgets/authentication/database_methods.dart';
 import '../widgets/authentication/fire_auth.dart';
 import '../widgets/chat/chat_screen_final.dart';
@@ -83,10 +84,13 @@ class _LandlordPortalState extends State<LandlordPortal> {
                   Expanded(
                     child: ManageYourTenantButton(
                       textTheme: textTheme,
+                      animation_name: 'bills-animation.json',
                       btnIcon: AssetImage('assets/images/login_ui.png'),
                       title: 'View bills',
                       paddingVertical: 20,
-                      onTap: () {},
+                      onTap: () {
+                        Get.to(() => LandlordBills());
+                      },
                     ),
                   ),
                   const SizedBox(width: 20),
@@ -96,6 +100,7 @@ class _LandlordPortalState extends State<LandlordPortal> {
                       textTheme: textTheme,
                       btnIcon: AssetImage('assets/images/login_ui.png'),
                       title: 'View Listing',
+                      animation_name: 'ecommerce-animation.json',
                       paddingVertical: 20,
                       onTap: () {
                         print(args);
@@ -117,6 +122,7 @@ class _LandlordPortalState extends State<LandlordPortal> {
                       textTheme: textTheme,
                       btnIcon: AssetImage('assets/images/login_ui.png'),
                       title: 'Chat with Tenant',
+                      animation_name: 'chat-animation.json',
                       paddingVertical: 20,
                       onTap: () {
                         var chatRoomId = getChatRoomIdByUsernames(
@@ -144,6 +150,7 @@ class _LandlordPortalState extends State<LandlordPortal> {
                     child: ManageYourTenantButton(
                       textTheme: textTheme,
                       btnIcon: AssetImage('assets/images/login_ui.png'),
+                      animation_name: 'notifications-animation.json',
                       title: 'Notify Tenant',
                       paddingVertical: 20,
                       onTap: () {},
@@ -166,6 +173,7 @@ class ManageYourTenantButton extends StatelessWidget {
     required this.title,
     required this.paddingVertical,
     // required this.subtitle,
+    required this.animation_name,
     required this.onTap,
     required this.textTheme,
     Key? key,
@@ -173,6 +181,8 @@ class ManageYourTenantButton extends StatelessWidget {
   final TextTheme textTheme;
   final double paddingVertical;
   final AssetImage btnIcon;
+  final String animation_name;
+
   final String title;
   final VoidCallback onTap;
 
@@ -197,8 +207,14 @@ class ManageYourTenantButton extends StatelessWidget {
                 Flexible(
                   child:
                       // Icon(Icons.house)
-                      Image(
-                    image: btnIcon,
+                      //     Image(
+                      //   image: btnIcon,
+                      // ),
+                      Lottie.asset(
+                    alignment: Alignment.center,
+                    // 'animation/manage_animation.json',
+                    'animation/$animation_name',
+                    height: 150,
                   ),
                 ),
               ],
