@@ -77,6 +77,16 @@ class DatabaseMethods {
     // return FirebaseFirestore.instance.collection("listings").doc("all_listings").get
   }
 
+  Future<Stream<DocumentSnapshot<Map<String, dynamic>>>> getBills() async {
+    // String myUsername = await SharedPreferenceHelper().getUserName();
+    // return FirebaseFirestore.instance.collection("listings").snapshots();
+    return FirebaseFirestore.instance
+        .collection('bills')
+        .doc('all_bills')
+        .snapshots();
+    // return FirebaseFirestore.instance.collection("listings").doc("all_listings").get
+  }
+
   //   Future<Stream<DocumentSnapshot<Map<String, dynamic>>>> getListings() async {
   //   // String myUsername = await SharedPreferenceHelper().getUserName();
   //   // return FirebaseFirestore.instance.collection("listings").snapshots();

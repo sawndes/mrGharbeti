@@ -64,16 +64,8 @@ class AddBillsController extends GetxController {
       "description": description.text.trim(),
       "bill_photo": img,
       "listings_user": thisUser,
-
-      // {
-      //   '6sXzuLh673UHiZOEpNXfUUgawV92': false,
-      //   'hahaha': false,
-      // }
-
-      // "listing_id": thisUser + '_' + randomAlphaNumeric(12)
-      "listing_id": listingId
     };
-    DatabaseMethods().addListings(thisUser, listingsData);
+    DatabaseMethods().addBills(thisUser, listingsData);
 
     title.clear();
     price.clear();

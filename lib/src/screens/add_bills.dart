@@ -22,24 +22,12 @@ class _AddBillsPageState extends State<AddBillsPage> {
   String? imgUrl;
   List<String>? imgUrls = [];
   List<File>? _images;
+  static GlobalKey<FormState> _formKey = GlobalKey();
 
   Future getImage(bool isCamera) async {
     XFile? image;
     List<XFile>? imagefiles;
     if (isCamera) {
-      // List<XFile>? camPhoto;
-      // image = (await _picker.pickImage(source: ImageSource.camera));
-      // camPhoto!.add(image!);
-      // if (image != null) {
-      //   // imagefiles!.add(image);
-      //   imagefiles = camPhoto;
-      //   // imagefiles = image;
-      //   setState(() {});
-      // } else {
-      //   print("No image is selected.");
-      // }
-      // _picker.pickMultiImage()
-      // imagecourse
     } else {
       var pickedfiles = await _picker.pickMultiImage();
       if (pickedfiles != null) {
@@ -76,7 +64,6 @@ class _AddBillsPageState extends State<AddBillsPage> {
   Widget build(BuildContext context) {
     String thisUser = FireAuth.instance.user.uid;
     final size = MediaQuery.of(context).size;
-    GlobalKey<FormState> _formKey = GlobalKey();
     final controller = Get.put(AddBillsController());
     return Scaffold(
         appBar: AppBarUI('Add your listings', false),
