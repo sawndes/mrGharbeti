@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:khalti_flutter/khalti_flutter.dart';
 import 'package:mr_gharbeti/firebase_options.dart';
 import 'package:mr_gharbeti/src/controller/all_listings_bookmark_controller.dart';
 import 'package:mr_gharbeti/src/controller/bookmark_clicked_controller.dart';
@@ -27,12 +28,19 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'App',
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.system,
-      home: const HomeScreen(),
-    );
+    return KhaltiScope(
+        publicKey: 'test_public_key_f74e348bcac5490eb6a350addff264b5',
+        enabledDebugging: true,
+        builder: (context, navKey) {
+          return GetMaterialApp(
+            title: 'App',
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            themeMode: ThemeMode.system,
+            home: const HomeScreen(),
+            navigatorKey: navKey,
+            localizationsDelegates: const [KhaltiLocalizations.delegate],
+          );
+        });
   }
 }

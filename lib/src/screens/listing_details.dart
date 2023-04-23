@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:mr_gharbeti/src/screens/dashboard.dart';
 
 import 'package:mr_gharbeti/src/widgets/dashboard_widgets/appBar_ui.dart';
 
@@ -295,20 +296,251 @@ class _ListingDetailState extends State<ListingDetail> {
                   ),
                 ),
               )
+            ] else if ((thisUser == Get.arguments['listings_user']) &&
+                !(Get.arguments['rent_user'].length == 0)) ...[
+              Expanded(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Row(
+                    // mainAxisAlignment: MainAxisAlignment,
+                    children: [
+                      SizedBox(
+                        width: 220,
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            // await FirebaseFirestore.instance
+                            //     .collection("listings")
+                            //     .doc("all_listings")
+                            //     .get()
+                            //     .then((documentSnapshot) async {
+                            //   var listings =
+                            //       documentSnapshot.data()!['listings'];
+                            //   var index = listings.indexWhere((listing) =>
+                            //       // listing["favorites"] == fav &&
+                            //       listing["listing_id"] ==
+                            //       arguments['listing_id']);
+
+                            //   return FirebaseFirestore.instance
+                            //       .collection("listings")
+                            //       .doc("all_listings")
+                            //       .update({"listings": listings});
+                            // });
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text("Delete Listing"),
+                                  content: const Text(
+                                      "Are you sure you want to remove this listing?"),
+                                  actions: <Widget>[
+                                    ElevatedButton(
+                                      child: Text("Yes"),
+                                      onPressed: () async {
+                                        final collectionRef = FirebaseFirestore
+                                            .instance
+                                            .collection('listings');
+                                        final docRef =
+                                            collectionRef.doc('all_listings');
+
+                                        docRef.get().then((doc) {
+                                          if (doc.exists) {
+                                            List<dynamic> listings =
+                                                doc['listings'];
+                                            if (listings.isNotEmpty) {
+                                              List<dynamic> firstElement = [
+                                                listings[4]
+                                              ];
+                                              docRef.update({
+                                                'listings':
+                                                    FieldValue.arrayRemove(
+                                                        firstElement)
+                                              });
+                                            } else {
+                                              print(
+                                                  'The listings array is empty');
+                                            }
+                                          } else {
+                                            print(
+                                                'The document does not exist');
+                                          }
+                                        });
+                                        Get.back();
+                                        Get.back();
+                                      },
+                                    ),
+                                    ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text('No'))
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                          child: const Text('Delete Listing'),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      SizedBox(
+                        width: 120,
+                        child: OutlinedButton(
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text("Remove Tenant?"),
+                                  content: const Text(
+                                      "Are you sure you want to remove tenant?"),
+                                  actions: <Widget>[
+                                    ElevatedButton(
+                                      child: Text("Yes"),
+                                      onPressed: () async {
+                                        await FirebaseFirestore.instance
+                                            .collection("listings")
+                                            .doc("all_listings")
+                                            .get()
+                                            .then((documentSnapshot) async {
+                                          var listings = documentSnapshot
+                                              .data()!['listings'];
+                                          var index = listings.indexWhere(
+                                              (listing) =>
+                                                  // listing["favorites"] == fav &&
+                                                  listing["listing_id"] ==
+                                                  arguments['listing_id']);
+                                          listings[index]["rent_user"] = "";
+                                          print(listings[index]['rent_user']);
+
+                                          return FirebaseFirestore.instance
+                                              .collection("listings")
+                                              .doc("all_listings")
+                                              .update({"listings": listings});
+                                        });
+
+                                        // Get.back();
+                                        // Get.back();
+                                        Get.offAll(() => DashBoard());
+                                      },
+                                    ),
+                                    ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text('No'))
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                          child: Text('Remove tenant'),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              )
+
+              // const Text(
+              //   'This listing is not available to rent. So, it will not be shown on ecommerce page',
+              //   style: TextStyle(
+              //     color: Colors.red,
+              //   ),
+              // )
             ]
 
             // :
             else if ((thisUser == Get.arguments['listings_user'])) ...[
-              const Text('')
-            ] else if ((thisUser == Get.arguments['listings_user']) &&
-                !(Get.arguments['rent_user'].length == 0)) ...[
-              const Text(
-                'This listing is not available to rent. So, it will not be shown on ecommerce page',
-                style: TextStyle(
-                  color: Colors.red,
+              Expanded(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Row(
+                    // mainAxisAlignment: MainAxisAlignment,
+                    children: [
+                      SizedBox(
+                        width: 350,
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            // await FirebaseFirestore.instance
+                            //     .collection("listings")
+                            //     .doc("all_listings")
+                            //     .get()
+                            //     .then((documentSnapshot) async {
+                            //   var listings =
+                            //       documentSnapshot.data()!['listings'];
+                            //   var index = listings.indexWhere((listing) =>
+                            //       // listing["favorites"] == fav &&
+                            //       listing["listing_id"] ==
+                            //       arguments['listing_id']);
+
+                            //   return FirebaseFirestore.instance
+                            //       .collection("listings")
+                            //       .doc("all_listings")
+                            //       .update({"listings": listings});
+                            // });
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text("Delete Listing"),
+                                  content: const Text(
+                                      "Are you sure you want to remove this listing?"),
+                                  actions: <Widget>[
+                                    ElevatedButton(
+                                      child: Text("Yes"),
+                                      onPressed: () async {
+                                        final collectionRef = FirebaseFirestore
+                                            .instance
+                                            .collection('listings');
+                                        final docRef =
+                                            collectionRef.doc('all_listings');
+
+                                        docRef.get().then((doc) {
+                                          if (doc.exists) {
+                                            List<dynamic> listings =
+                                                doc['listings'];
+                                            if (listings.isNotEmpty) {
+                                              List<dynamic> firstElement = [
+                                                listings[4]
+                                              ];
+                                              docRef.update({
+                                                'listings':
+                                                    FieldValue.arrayRemove(
+                                                        firstElement)
+                                              });
+                                            } else {
+                                              print(
+                                                  'The listings array is empty');
+                                            }
+                                          } else {
+                                            print(
+                                                'The document does not exist');
+                                          }
+                                        });
+                                        Get.back();
+                                        Get.back();
+                                      },
+                                    ),
+                                    ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text('No'))
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                          child: const Text('Delete Listing'),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               )
-            ],
+            ]
           ],
         ),
       ),

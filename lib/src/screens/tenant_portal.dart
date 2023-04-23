@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:khalti_flutter/khalti_flutter.dart';
 import 'package:lottie/lottie.dart';
-
+import 'package:mr_gharbeti/src/screens/bills_landlord.dart';
 import '../widgets/authentication/database_methods.dart';
 import '../widgets/authentication/fire_auth.dart';
 import '../widgets/chat/chat_screen_final.dart';
@@ -88,7 +89,9 @@ class _TenantPortalState extends State<TenantPortal> {
                       btnIcon: AssetImage('assets/images/login_ui.png'),
                       title: 'View bills',
                       paddingVertical: 20,
-                      onTap: () {},
+                      onTap: () {
+                        Get.to(() => LandlordBills());
+                      },
                     ),
                   ),
                   const SizedBox(width: 20),
@@ -161,7 +164,56 @@ class _TenantPortalState extends State<TenantPortal> {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          payWithKhalti();
+          // Get.to(() => const AddBillsPage());
+        },
+        label: const Text('Pay with khalti'),
+        icon: const Icon(Icons.add),
+        backgroundColor: Colors.black,
+      ),
     );
+  }
+
+  payWithKhalti() {
+    // KhaltiScope.of
+    KhaltiScope.of(context).pay(
+      config: PaymentConfig(
+          amount: 1000,
+          productIdentity: "Landlord Payment",
+          productName: "Rent"),
+      preferences: [PaymentPreference.khalti],
+      onSuccess: onSucess,
+      onFailure: onFailure,
+      onCancel: onCancel,
+    );
+  }
+
+  void onSucess(PaymentSuccessModel sucess) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Payment Successful'),
+            actions: [
+              SimpleDialogOption(
+                child: Text("OK"),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        });
+  }
+
+  void onFailure(PaymentFailureModel failure) {
+    debugPrint(failure.toString());
+  }
+
+  void onCancel() {
+    debugPrint("Cancelled");
   }
 }
 
@@ -202,18 +254,12 @@ class ManageYourTenantButton extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Flexible(
-                    child:
-                        // Icon(Icons.house)
-                        Lottie.asset(
+                    child: Lottie.asset(
                   alignment: Alignment.center,
                   // 'animation/manage_animation.json',
                   'animation/$animation_name',
                   height: 150,
-                )
-                    //     Image(
-                    //   image: btnIcon,
-                    // ),
-                    ),
+                )),
               ],
             ),
             const SizedBox(height: 25),

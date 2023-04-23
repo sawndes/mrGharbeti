@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:mr_gharbeti/src/screens/add_bills.dart';
+import 'package:mr_gharbeti/src/screens/bill_view.dart';
 import 'package:mr_gharbeti/src/widgets/dashboard_widgets/appBar_ui.dart';
 
 import '../controller/all_listings_bookmark_controller.dart';
@@ -107,9 +107,8 @@ class _LandlordBillsState extends State<LandlordBills> {
 
 class AllBillsTile extends StatelessWidget {
   final List ds;
-
   final TextTheme textTheme;
-  const AllBillsTile(this.textTheme, this.ds, {super.key});
+  const AllBillsTile(this.textTheme, this.ds) : super();
 
   @override
   Widget build(BuildContext context) {
@@ -122,59 +121,52 @@ class AllBillsTile extends StatelessWidget {
       scrollDirection: Axis.vertical,
       itemCount: list.length,
       itemBuilder: (context, index) => InkWell(
-        onTap: () async {
-          // Get.to(() => ListingDetail(textTheme), arguments: list[index]);
-
-          // print(allListingsBookmarkController.favList);
+        onTap: () {
+          Get.to(() => BillView(), arguments: list[index]);
+          // handle card click
         },
-        child: Card(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          elevation: 4,
-          child: Column(
-            children: [
-              ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
-                ),
-                child: Image.network(
-                  list[index]['bill_photo'][0],
-                  height: 250,
-                  width: MediaQuery.of(context).size.width,
-                  fit: BoxFit.fill,
-                ),
+        splashColor: Theme.of(context).accentColor.withOpacity(0.5),
+        borderRadius: BorderRadius.circular(10),
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 20.0),
+          child: Ink(
+            decoration: BoxDecoration(
+              color: const Color(0xFFF7F6F1),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
               ),
-              ListTile(
-                title: Text(
-                  list[index]['bill_name'],
-                  style: const TextStyle(fontSize: 20),
-                ),
-                trailing: Text(
-                  "Rs " + list[index]['bill_price'],
-                  style: TextStyle(fontSize: 20),
-                ),
-                subtitle: Text(list[index]['description']
-                    // lorem.substring(0, 100),
+              elevation: 4,
+              child: Column(
+                children: [
+                  ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10),
                     ),
+                    child: Image.network(
+                      list[index]['bill_photo'][0],
+                      height: 250,
+                      width: MediaQuery.of(context).size.width,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                  ListTile(
+                    title: Text(
+                      list[index]['bill_name'],
+                      style: const TextStyle(fontSize: 20),
+                    ),
+                    trailing: Text(
+                      "Rs " + list[index]['bill_price'],
+                      style: const TextStyle(fontSize: 20),
+                    ),
+                    subtitle: Text(list[index]['description']),
+                  ),
+                ],
               ),
-
-              // Padding(
-              //   padding: const EdgeInsets.all(15.0),
-              //   child: TextButton(
-              //     onPressed: () {
-              //       print('asdasd');
-              //     },
-              //     style: TextButton.styleFrom(
-              //         backgroundColor: Colors.blue,
-              //         minimumSize: Size(MediaQuery.of(context).size.width, 56)),
-              //     // child: const Text(
-              //     //   'Add to cart',
-              //     //   style: TextStyle(color: Colors.white),
-              //     // ),
-              //   ),
-              // )
-            ],
+            ),
           ),
         ),
       ),
