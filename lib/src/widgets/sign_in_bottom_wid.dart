@@ -28,7 +28,7 @@ class SignInBottomWidget {
               'Select one of the options given below to sign in or sign up',
             ),
             const SizedBox(
-              height: 30,
+              height: 10,
             ),
             SignInAllButtons(
               btnIcon: Icons.mail_outline_rounded,
@@ -42,15 +42,15 @@ class SignInBottomWidget {
                 //     builder: (context) => ForgotPasswordMailScreen()));
               },
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            SignInAllButtons(
-              btnIcon: Icons.facebook,
-              title: 'Facebook',
-              subtitle: 'Login/Sign Up with Facebook',
-              onTap: () {},
-            ),
+            // const SizedBox(
+            //   height: 10,
+            // ),
+            // SignInAllButtons(
+            //   btnIcon: Icons.facebook,
+            //   title: 'Facebook',
+            //   subtitle: 'Login/Sign Up with Facebook',
+            //   onTap: () {},
+            // ),
           ],
         ),
       ),

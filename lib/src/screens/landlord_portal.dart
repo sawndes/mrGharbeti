@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mr_gharbeti/src/screens/bills_landlord.dart';
+import 'package:mr_gharbeti/src/screens/notify_user.dart';
 import '../widgets/authentication/database_methods.dart';
 import '../widgets/authentication/fire_auth.dart';
 import '../widgets/chat/chat_screen_final.dart';
@@ -153,7 +154,11 @@ class _LandlordPortalState extends State<LandlordPortal> {
                       animation_name: 'notifications-animation.json',
                       title: 'Notify Tenant',
                       paddingVertical: 20,
-                      onTap: () {},
+                      onTap: () {
+                        Get.to(() => NotifyUser(
+                              rentUid: args['rent_user'].toString(),
+                            ));
+                      },
                     ),
                   )
                 ],

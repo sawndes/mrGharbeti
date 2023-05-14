@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:mr_gharbeti/src/screens/dashboard.dart';
+import 'package:mr_gharbeti/src/controller/all_listings_bookmark_controller.dart';
 
 import 'package:mr_gharbeti/src/widgets/dashboard_widgets/appBar_ui.dart';
 
@@ -57,6 +58,8 @@ class _ListingDetailState extends State<ListingDetail> {
 
   @override
   Widget build(BuildContext context) {
+    AllListingsBookmarkController allListingsBookmarkController = Get.find();
+
     var arguments = Get.arguments;
     String thisUser = FireAuth.instance.user.uid;
 
@@ -190,10 +193,25 @@ class _ListingDetailState extends State<ListingDetail> {
                     fontSize: 20,
                   ),
                 ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.bookmark_border_outlined),
-                )
+                // ElevatedButton(
+                //   // style: ElevatedButton.styleFrom(
+                //   //   shape: const CircleBorder(),
+                //   // ),
+                //   onPressed: () async {
+                //     allListingsBookmarkController.addBookmarkListingsDetails(
+                //         arguments, thisUser);
+                //   },
+                //   child: Icon(Icons.bookmark_border_outlined),
+                //   //   child: arguments['favorites'][thisUser] == null
+                //   //       ? const Icon(Icons.bookmark_border_outlined)
+                //   //       : arguments['favorites'][thisUser]
+                //   //           ? const Icon(Icons.bookmark)
+                //   //           : const Icon(Icons.bookmark_border_outlined),
+                //   // ),
+                //   // IconButton(
+                //   //   onPressed: () {},
+                //   //   icon: const Icon(Icons.bookmark_border_outlined),
+                // )
               ],
             ),
             const SizedBox(

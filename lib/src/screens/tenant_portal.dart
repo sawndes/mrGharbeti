@@ -16,6 +16,8 @@ class TenantPortal extends StatefulWidget {
 }
 
 class _TenantPortalState extends State<TenantPortal> {
+  Stream<QuerySnapshot>? messageStream;
+
   getChatRoomIdByUsernames(String a, String b) {
     if (a.substring(0, 1).codeUnitAt(0) > b.substring(0, 1).codeUnitAt(0)) {
       return "$b\_$a";
@@ -36,9 +38,43 @@ class _TenantPortalState extends State<TenantPortal> {
     setState(() {});
   }
 
+  getAndSetMessages() async {
+    // chatRoomId = getChatRoomIdByUsernames(
+    //   thisUser,
+    //   chatWithUserName.toString(),
+    // );
+    var messageStream =
+        await DatabaseMethods().getNotifications(username + '_' + 'thisUser');
+    messageStream = await DatabaseMethods()
+        .getChatRoomMessages(username + '_' + FireAuth.instance.user.uid);
+    setState(() {});
+  }
+
+  // Widget chatMessages() {
+  //   return StreamBuilder<QuerySnapshot>(
+  //     stream: messageStream,
+  //     builder: (context, snapshot) {
+  //       return snapshot.hasData
+  //           ? ListView.builder(
+  //               padding: const EdgeInsets.only(bottom: 70, top: 16),
+  //               itemCount: snapshot.data!.docs.length,
+  //               // itemCount: snapshot.data,
+  //               reverse: true,
+  //               itemBuilder: (context, index) {
+  //                 DocumentSnapshot ds = snapshot.data!.docs[index];
+  //                 // return chatMessageTile(
+  //                 //     ds["message"], thisUser == ds["sendBy"]);
+  //               })
+  //           : const Center(child: CircularProgressIndicator());
+  //     },
+  //   );
+  // }
+
   @override
   void initState() {
     getThisUserInfo();
+    getAndSetMessages();
+
     super.initState();
   }
 
@@ -59,9 +95,25 @@ class _TenantPortalState extends State<TenantPortal> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Welcome to Tenant portal',
-                style: textTheme.headline4,
+              Row(
+                children: [
+                  Text(
+                    'Welcome to Tenant portal',
+                    style: textTheme.headline4,
+                  ),
+                  const SizedBox(
+                    width: 80,
+                  ),
+                  // IconButton(
+                  //   onPressed: () async {
+                  //     print(username);
+                  //     print(thisUser);
+
+                  //     // print(messageStream);
+                  //   },
+                  //   icon: const Icon(Icons.notifications),
+                  // )
+                ],
               ),
 
               const SizedBox(
@@ -119,12 +171,12 @@ class _TenantPortalState extends State<TenantPortal> {
               Row(
                 children: [
                   Expanded(
-                    child: ManageYourTenantButton(
+                    child: ManageYourTenantButtonn(
                       animation_name: 'chat-animation.json',
                       textTheme: textTheme,
                       btnIcon: AssetImage('assets/images/login_ui.png'),
                       title: 'Chat with Landlord',
-                      paddingVertical: 20,
+                      paddingVertical: 10,
                       onTap: () {
                         var chatRoomId = getChatRoomIdByUsernames(
                           thisUser,
@@ -147,16 +199,16 @@ class _TenantPortalState extends State<TenantPortal> {
                     ),
                   ),
                   const SizedBox(width: 20),
-                  Expanded(
-                    child: ManageYourTenantButton(
-                      textTheme: textTheme,
-                      animation_name: 'notifications-animation.json',
-                      btnIcon: AssetImage('assets/images/login_ui.png'),
-                      title: 'All Notifications',
-                      paddingVertical: 20,
-                      onTap: () {},
-                    ),
-                  )
+                  // Expanded(
+                  //   child: ManageYourTenantButton(
+                  //     textTheme: textTheme,
+                  //     animation_name: 'notifications-animation.json',
+                  //     btnIcon: AssetImage('assets/images/login_ui.png'),
+                  //     title: 'All Notifications',
+                  //     paddingVertical: 20,
+                  //     onTap: () {},
+                  //   ),
+                  // )
                 ],
               )
               // DashboardTopListings(textTheme: textTheme),
@@ -195,7 +247,7 @@ class _TenantPortalState extends State<TenantPortal> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Payment Successful'),
+            title: const Text('Payment Successful'),
             actions: [
               SimpleDialogOption(
                 child: Text("OK"),
@@ -260,6 +312,68 @@ class ManageYourTenantButton extends StatelessWidget {
                   'animation/$animation_name',
                   height: 150,
                 )),
+              ],
+            ),
+            const SizedBox(height: 25),
+            Text(title,
+                style: textTheme.headline4,
+                maxLines: 2,
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis),
+            // Text('Naxal-8, Kathmandu',
+            //     style: textTheme.bodyText2,
+            //     maxLines: 1,
+            //     overflow: TextOverflow.ellipsis),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ManageYourTenantButtonn extends StatelessWidget {
+  const ManageYourTenantButtonn({
+    required this.btnIcon,
+    required this.title,
+    required this.paddingVertical,
+    // required this.subtitle,
+    required this.animation_name,
+    required this.onTap,
+    required this.textTheme,
+    Key? key,
+  }) : super(key: key);
+  final TextTheme textTheme;
+  final double paddingVertical;
+  final AssetImage btnIcon;
+  final String title;
+  final String animation_name;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Ink(
+        padding:
+            EdgeInsets.symmetric(horizontal: 10, vertical: paddingVertical),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: const Color(0xFFF7F6F1),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                    child: Lottie.asset(
+                        alignment: Alignment.centerRight,
+                        // 'animation/manage_animation.json',
+                        'animation/$animation_name',
+                        height: 150,
+                        width: 200)),
               ],
             ),
             const SizedBox(height: 25),

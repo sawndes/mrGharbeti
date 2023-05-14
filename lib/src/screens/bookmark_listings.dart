@@ -76,45 +76,22 @@ class _BookmarkListingsState extends State<BookmarkListings> {
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
                             Map<String, dynamic> data = snapshot.data!.data()!;
-                            // List<Map<String, dynamic>> listings = snapshot
-                            //     .data!.data()!
-                            //     .map((document) => document.data)
-                            //     .toList()
-                            //     .cast<Map<String, dynamic>>();
-                            // List<Map<String, dynamic>> listings = snapshot.data!
-                            //     .data()!
-                            //     .map<Map<String, dynamic>,
-                            //             Map<String, dynamic>>(
-                            //         (document) => document.data)
-                            //     .toList();
 
-                            // List<Map<String, dynamic>> listings =
-                            //     data as List<Map<String, dynamic>>;
-                            // List<Map<String, dynamic>> favoriteListings =
-                            //     listings
-                            //         .where((listing) => listing['favorites']
-                            //             ['21GJW3e0UpUkQdOx5H6iWaDdyLt1'])
-                            //         .toList();
-
-                            // List<Map<String, dynamic>> listings = [];
-                            // for (var document in snapshot.data!.data()!.entries) {
-                            //   listings.add(document);
-                            // }
                             List<dynamic> listings = data['listings'];
 
                             List favoriteListings = listings
-                                .where(
-                                    (listing) => listing['favorites'][thisUser])
+                                .where((listing) =>
+                                    listing['favorites']?[thisUser] ?? false)
                                 // (listing) =>
                                 //     listing['listings_user'] == thisUser)
                                 .toList();
 
-                            // if (favoriteListings.isEmpty) {
-                            //   return const Center(
-                            //     child:
-                            //         Text('There is no favorites listings yet'),
-                            //   );
-                            // }
+                            if (favoriteListings.isEmpty) {
+                              return const Center(
+                                child:
+                                    Text('There is no favorites listings yet'),
+                              );
+                            }
 
                             return AllListingsTile(textTheme, favoriteListings);
                           })

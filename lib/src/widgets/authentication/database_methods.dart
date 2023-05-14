@@ -36,6 +36,16 @@ class DatabaseMethods {
         .set(messageInfoMap);
   }
 
+  Future addNotification(String chatRoomId, String messageId,
+      Map<String, dynamic> messageInfoMap) async {
+    return FirebaseFirestore.instance
+        .collection("notifications")
+        .doc(chatRoomId)
+        .collection("notification")
+        .doc(messageId)
+        .set(messageInfoMap);
+  }
+
   firstListingAdder() async {
     Map<String, dynamic> firstTimeListingsInfo = {"listings": []};
 
@@ -252,12 +262,39 @@ class DatabaseMethods {
     }
   }
 
+  createNotificationRoom(
+      String chatRoomId, Map<String, dynamic> chatRoomInfoMap) async {
+    final snapShot = await FirebaseFirestore.instance
+        .collection("notifications")
+        .doc(chatRoomId)
+        .get();
+
+    if (snapShot.exists) {
+      // chatroom already exists
+      return true;
+    } else {
+      // chatroom does not exists
+      return FirebaseFirestore.instance
+          .collection("notifications")
+          .doc(chatRoomId)
+          .set(chatRoomInfoMap);
+    }
+  }
+
   Future<Stream<QuerySnapshot>> getChatRoomMessages(chatRoomId) async {
     return FirebaseFirestore.instance
         .collection("chatrooms")
         .doc(chatRoomId)
         .collection("chats")
         .orderBy("ts", descending: true)
+        .snapshots();
+  }
+
+  Future<Stream<QuerySnapshot>> getNotifications(chatRoomId) async {
+    return FirebaseFirestore.instance
+        .collection("notifications")
+        .doc(chatRoomId)
+        .collection("notification")
         .snapshots();
   }
 

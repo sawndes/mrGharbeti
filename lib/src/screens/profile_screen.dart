@@ -115,38 +115,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
           padding: const EdgeInsets.all(30),
           child: Column(
             children: [
-              Stack(
-                children: [
-                  SizedBox(
-                    width: 120,
-                    height: 80,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: Image(
-                        image: NetworkImage(FireAuth.instance.user.photoURL!),
+              SizedBox(
+                width: 120,
+                height: 80,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(100),
+                  child: Image(
+                    image: NetworkImage(FireAuth.instance.user.photoURL!),
 
-                        // image: NetworkImage(myprofilePic!),
-                      ),
-                    ),
+                    // image: NetworkImage(myprofilePic!),
                   ),
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: Container(
-                        width: 35,
-                        height: 35,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100),
-                          color: Colors.grey.withOpacity(0.1),
-                        ),
-                        child: const Icon(
-                          LineAwesomeIcons.alternate_pencil,
-                          color: Colors.black,
-                          size: 20,
-                        )),
-                  )
-                ],
+                ),
               ),
+
               const SizedBox(
                 height: 10,
               ),
@@ -167,33 +148,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const SizedBox(
                 height: 20,
               ),
-              SizedBox(
-                width: 200,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Get.to(() => UpdateProfileScreen());
-                  },
-                  child: Text(
-                    'Edit Profile',
-                  ),
-                  style: ElevatedButton.styleFrom(shape: StadiumBorder()),
-                ),
-              ),
-              const SizedBox(height: 30),
-              const Divider(),
-              const SizedBox(
-                height: 10,
-              ),
-              ProfileMenuWidget(
-                title: 'Settings',
-                icon: LineAwesomeIcons.cog,
-                onPress: () {
-                  // print(name);
-                  // print(controller.user);
-                  // print(controller.user['name']);
-                  // print(uid);
-                },
-              ),
+
               const Divider(),
               const SizedBox(
                 height: 10,
@@ -208,6 +163,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 icon: LineAwesomeIcons.question,
                 onPress: () {},
               ),
+              const Divider(),
+
+              ProfileMenuWidget(
+                title: 'Delete Account',
+                icon: LineAwesomeIcons.trash,
+                textColor: Colors.red,
+                onPress: () async {
+                  // continueCallBack() => {
+                  //       FireAuth.instance.logout(),
+                  //       Navigator.of(context).pop(),
+                  //     };
+
+                  // showDialog(
+                  //   context: context,
+                  //   builder: (BuildContext context) {
+                  //     return BlurryDialog("Confirm",
+                  //         "Are you sure you want to logout?", continueCallBack);
+                  //   },
+                  // );
+                },
+              ),
+
               ProfileMenuWidget(
                 title: 'Logout',
                 icon: LineAwesomeIcons.alternate_sign_out,

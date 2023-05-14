@@ -28,10 +28,10 @@ class SignInAllButtons extends StatelessWidget {
             Icon(
               btnIcon,
               // Icons.mail_outline_rounded,
-              size: 60,
+              size: 50,
             ),
             const SizedBox(
-              width: 10,
+              width: 20,
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

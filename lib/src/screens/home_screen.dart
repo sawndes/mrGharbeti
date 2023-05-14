@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../widgets/Forgot_pw_widgets/forgot_password_modal_bottom_widget.dart';
+import '../widgets/authentication/fire_auth.dart';
 import '../widgets/sign_in_bottom_wid.dart';
 import './login_screen.dart';
 import './signup_screen.dart';
@@ -21,7 +22,7 @@ class HomeScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Image.asset(
-                  'assets/images/login_ui.png',
+                  'assets/images/1.png',
                   height: height * 0.6,
                 ),
                 Column(
@@ -41,7 +42,7 @@ class HomeScreen extends StatelessWidget {
                   // height: 80,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.all(30),
+                      padding: EdgeInsets.all(22),
                       shape: RoundedRectangleBorder(
                           //to set border radius to button
                           borderRadius: BorderRadius.circular(5)),
@@ -49,13 +50,16 @@ class HomeScreen extends StatelessWidget {
                     // style: ButtonStyle(padding: EdgeInsets.all(10)),
                     // style: Theme.of,
                     onPressed: () {
-                      SignInBottomWidget.buildShowModalBottomSheet(context);
+                      // SignInBottomWidget.buildShowModalBottomSheet(context);
+                      FireAuth().signInWithGoogle();
+
                       // Navigator.of(context).push(MaterialPageRoute(
                       //     builder: (context) => SignupScreen()));
                     },
+
                     child: const Text(
-                      "Get Started",
-                      style: TextStyle(fontSize: 17),
+                      "Get Started with Google",
+                      style: TextStyle(fontSize: 15),
                     ),
                   ),
                 ),

@@ -55,10 +55,22 @@ dependencies:
   speech_to_text: ^6.1.1
   carousel_slider: ^4.2.1
   khalti_flutter: ^2.1.0
+  http: ^0.13.5
+  firebase_messaging: ^14.4.1
+  flutter_local_notifications: ^9.2.0
+  
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+#   flutter_launcher_icons: ^0.13.1
+
+# flutter_launcher_icons:
+#   android: "launcher_icon"
+#   image_path: "assets/images/1.png"
+
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

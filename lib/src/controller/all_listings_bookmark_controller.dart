@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -64,6 +66,34 @@ class AllListingsBookmarkController extends GetxController {
           .doc("all_listings")
           .update({"listings": listings});
     });
+  }
+
+  void addBookmarkListingsDetails(HashMap list, String thisUser) async {
+    // var fav = list[index]['favorites'][thisUser];
+    var fav = list['favorites'][thisUser];
+    // favList = fav;
+    print(fav);
+    // var listingId = list['listing_id'];
+
+    // fav ??= false;
+
+    // await FirebaseFirestore.instance
+    //     .collection("listings")
+    //     .doc("all_listings")
+    //     .get()
+    //     .then((documentSnapshot) {
+    //   var listings = documentSnapshot.data()!['listings'];
+    //   var index =
+    //       listings.indexWhere((listing) => listing["listing_id"] == listingId);
+
+    //   if (index != -1) {
+    //     listings[index]["favorites"][thisUser] = !fav;
+    //   }
+    //   return FirebaseFirestore.instance
+    //       .collection("listings")
+    //       .doc("all_listings")
+    //       .update({"listings": listings});
+    // });
   }
 
   // void addBookmark(AllListingsModel list) {

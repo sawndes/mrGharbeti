@@ -78,40 +78,6 @@ class NavigationPage extends StatelessWidget {
               // text: 'Favorites',
             )
           ],
-          // BottomNavigationBar(
-          //   type: BottomNavigationBarType.shifting,
-          //   selectedItemColor: Colors.black,
-          //   unselectedItemColor: Colors.grey,
-          //   showSelectedLabels: false,
-          //   showUnselectedLabels: false,
-          //   onTap: (index) {
-          //     bottomNavigationController.changeIndex(index);
-          //   },
-          //   currentIndex: bottomNavigationController.selectedIndex.value,
-          //   items: [
-          //     BottomNavigationBarItem(
-          //       label: "Home",
-          //       // icon: Icon(Icons.home),
-          //       icon: Icon(LineAwesomeIcons.home),
-          //     ),
-          //     BottomNavigationBarItem(
-          //       label: "Chat",
-          //       icon: Icon(Icons.chat_bubble_rounded),
-          //     ),
-          //     BottomNavigationBarItem(
-          //       label: "Add",
-          //       icon: Icon(Icons.add_circle_outline_sharp),
-          //     ),
-          //     BottomNavigationBarItem(
-          //       label: "Bookmark",
-          //       icon: Icon(Icons.bookmark),
-          //     ),
-          //     BottomNavigationBarItem(
-          //       label: "Home",
-          //       icon: Icon(LineAwesomeIcons.user),
-          //     ),
-          //   ],
-          // ),
         ),
       ),
     );
