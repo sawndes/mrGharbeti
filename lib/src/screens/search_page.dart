@@ -35,7 +35,9 @@ class _SearchPageState extends State<SearchPage> {
 
         _listings = data['listings'];
 
-        _filteredListings = _listings;
+        _filteredListings = _listings
+            .where((listing) => listing['rent_user'].length == 0)
+            .toList();
       });
     });
   }
