@@ -164,7 +164,7 @@ class FireAuth extends GetxController {
   }
 
   Future<void> logout() async {
-    await GoogleSignIn().disconnect();
+    // await GoogleSignIn().disconnect();
     await _auth.signOut();
   }
 }

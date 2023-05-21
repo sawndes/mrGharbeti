@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:mr_gharbeti/src/helper/sharedpref_helper.dart';
+import 'package:mr_gharbeti/src/screens/FAQ.dart';
 import 'package:mr_gharbeti/src/screens/dashboard.dart';
+import 'package:mr_gharbeti/src/screens/info_page.dart';
 
 import '../controller/profile_controller.dart';
 import '../widgets/authentication/database_methods.dart';
@@ -89,7 +91,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
-        backgroundColor: Colors.transparent,
+        backgroundColor: const Color(0xFF00BF6D).withOpacity(0.9),
         leading: IconButton(
           onPressed: () => Get.back(),
           icon: const Icon(
@@ -156,34 +158,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ProfileMenuWidget(
                 title: 'Info',
                 icon: LineAwesomeIcons.info,
-                onPress: () {},
+                onPress: () {
+                  Get.to(() => InfoPage());
+                },
               ),
               ProfileMenuWidget(
                 title: 'FAQ',
                 icon: LineAwesomeIcons.question,
-                onPress: () {},
-              ),
-              const Divider(),
-
-              ProfileMenuWidget(
-                title: 'Delete Account',
-                icon: LineAwesomeIcons.trash,
-                textColor: Colors.red,
-                onPress: () async {
-                  // continueCallBack() => {
-                  //       FireAuth.instance.logout(),
-                  //       Navigator.of(context).pop(),
-                  //     };
-
-                  // showDialog(
-                  //   context: context,
-                  //   builder: (BuildContext context) {
-                  //     return BlurryDialog("Confirm",
-                  //         "Are you sure you want to logout?", continueCallBack);
-                  //   },
-                  // );
+                onPress: () {
+                  Get.to(() => FAQPage());
                 },
               ),
+              const Divider(),
 
               ProfileMenuWidget(
                 title: 'Logout',
