@@ -90,7 +90,8 @@ class _LandlordPortalState extends State<LandlordPortal> {
                       title: 'View bills',
                       paddingVertical: 20,
                       onTap: () {
-                        Get.to(() => LandlordBills());
+                        Get.to(() => LandlordBills(), arguments: args);
+                        // print(args);
                       },
                     ),
                   ),

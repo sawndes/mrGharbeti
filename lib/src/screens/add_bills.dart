@@ -65,8 +65,9 @@ class _AddBillsPageState extends State<AddBillsPage> {
     String thisUser = FireAuth.instance.user.uid;
     final size = MediaQuery.of(context).size;
     final controller = Get.put(AddBillsController());
+    var arguments = Get.arguments;
     return Scaffold(
-        appBar: AppBarUI('Add your listings', false),
+        appBar: AppBarUI('Add your bills', false),
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -159,16 +160,6 @@ class _AddBillsPageState extends State<AddBillsPage> {
                                           height: 80,
                                           child: Column(
                                             children: <Widget>[
-                                              // ListTile(
-                                              //   leading: Icon(Icons.camera_alt),
-                                              //   title: Text('Take a photo'),
-                                              //   onTap: () {
-                                              //     getImage(true);
-                                              //     // _pickImage(ImageSource.camera);
-                                              //     Navigator.pop(context);
-                                              //   },
-                                              // ),
-
                                               ListTile(
                                                 leading:
                                                     Icon(Icons.photo_library),
@@ -197,31 +188,16 @@ class _AddBillsPageState extends State<AddBillsPage> {
                               width: double.infinity,
                               child: ElevatedButton(
                                 onPressed: () async {
-                                  // if (_images == null) return [];
-                                  // // await _uploadImage(_image);
-                                  // List<String> imageUrls = [];
-                                  // for (File image in _images!) {
-                                  //   String imageUrl = await _uploadImages(image);
-                                  //   imageUrls.add(imageUrl);
-                                  // }
                                   await _uploadImages(_images!);
-                                  // print('object');
-                                  // print(FireAuth.instance.user.uid);
-                                  // addListings();
-                                  // print(imgUrl);
                                   if (_formKey.currentState!.validate()) {
                                     _formKey.currentState!.save();
-                                    // AddListingsController.instance.addListings(
-                                    //   controller.title,
-                                    //   controller.price,
-                                    //   controller.description,
-                                    //   imgUrls!,
-                                    // );
+                                    print(arguments['listing_id']);
                                     AddBillsController.instance.addBills(
                                       controller.title,
                                       controller.price,
                                       controller.description,
                                       imgUrls!,
+                                      arguments['listing_id'],
                                     );
                                   } else {
                                     Get.snackbar('Fill up the form',
@@ -237,7 +213,7 @@ class _AddBillsPageState extends State<AddBillsPage> {
                                   //   imgUrl!,
                                   // );
                                 },
-                                child: const Text('Add listings'),
+                                child: const Text('Add Bills'),
                               ),
                             ),
                           ),

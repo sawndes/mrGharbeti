@@ -365,8 +365,16 @@ class _ListingDetailState extends State<ListingDetail> {
                                             List<dynamic> listings =
                                                 doc['listings'];
                                             if (listings.isNotEmpty) {
+                                              print('asdasd');
+                                              // List<dynamic> firstElement = [
+                                              //   listings[4]
+                                              // ];
+
+                                              print(arguments);
+                                              print('hahaha');
+                                              print(listings[0]);
                                               List<dynamic> firstElement = [
-                                                listings[4]
+                                                arguments
                                               ];
                                               docRef.update({
                                                 'listings':
@@ -382,8 +390,8 @@ class _ListingDetailState extends State<ListingDetail> {
                                                 'The document does not exist');
                                           }
                                         });
-                                        Get.back();
-                                        Get.back();
+                                        // Get.back();
+                                        // Get.back();
                                       },
                                     ),
                                     ElevatedButton(
@@ -520,8 +528,11 @@ class _ListingDetailState extends State<ListingDetail> {
                                             List<dynamic> listings =
                                                 doc['listings'];
                                             if (listings.isNotEmpty) {
+                                              print(arguments);
+                                              print('hahaha');
+                                              print(listings[0]);
                                               List<dynamic> firstElement = [
-                                                listings[4]
+                                                arguments
                                               ];
                                               docRef.update({
                                                 'listings':

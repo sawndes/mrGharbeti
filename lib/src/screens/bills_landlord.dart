@@ -47,6 +47,7 @@ class _LandlordBillsState extends State<LandlordBills> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    var args = Get.arguments;
 
     return Scaffold(
       appBar: AppBarUI('Bills', true),
@@ -75,8 +76,9 @@ class _LandlordBillsState extends State<LandlordBills> {
                             List<dynamic> bills = data['bills'];
 
                             List filteredBills = bills
-                                .where((listing) =>
-                                    listing['listings_user'] == thisUser)
+                                .where((bill) =>
+                                    bill['listings_user'] == thisUser &&
+                                    bill['listing_id'] == args['listing_id'])
                                 .toList();
                             // return Center(
                             //   child: Text(filteredBills.toString()),
@@ -95,7 +97,8 @@ class _LandlordBillsState extends State<LandlordBills> {
 
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          Get.to(() => const AddBillsPage());
+          print(args);
+          Get.to(() => const AddBillsPage(), arguments: args);
         },
         label: const Text('Add Bills'),
         icon: const Icon(Icons.add),

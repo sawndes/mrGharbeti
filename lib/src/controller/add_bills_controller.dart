@@ -49,11 +49,11 @@ class AddBillsController extends GetxController {
   }
 
   addBills(
-    TextEditingController title,
-    TextEditingController price,
-    TextEditingController description,
-    List<String> img,
-  ) async {
+      TextEditingController title,
+      TextEditingController price,
+      TextEditingController description,
+      List<String> img,
+      String listing_id) async {
     String listingId = '${thisUser}_${randomAlphaNumeric(12)}';
     final Map<String, bool> userMap = await getUserMap();
     // final imgUrl = _uploadImage(img);
@@ -64,6 +64,7 @@ class AddBillsController extends GetxController {
       "description": description.text.trim(),
       "bill_photo": img,
       "listings_user": thisUser,
+      "listing_id": listing_id,
     };
     DatabaseMethods().addBills(thisUser, listingsData);
 

@@ -41,7 +41,11 @@ class AppBarUI extends StatelessWidget implements PreferredSizeWidget {
         //   //For Dark Color
         //   color: isDark ? Colors.white : const Color(0xff000000),
         // ),
-        title: Text(Titletext, style: Theme.of(context).textTheme.headline2),
+        title: Text(
+          Titletext,
+          style: Theme.of(context).textTheme.headline2,
+          overflow: TextOverflow.clip,
+        ),
         actions: [
           Container(
             margin: const EdgeInsets.only(right: 20, top: 7),
@@ -81,7 +85,11 @@ class AppBarUI extends StatelessWidget implements PreferredSizeWidget {
         //   //For Dark Color
         //   color: isDark ? Colors.white : const Color(0xff000000),
         // ),
-        title: Text(Titletext, style: Theme.of(context).textTheme.headline2),
+        title: Text(
+          Titletext,
+          style: Theme.of(context).textTheme.headline2,
+          overflow: TextOverflow.clip,
+        ),
         actions: [
           Container(
             margin: const EdgeInsets.only(right: 20, top: 7),
