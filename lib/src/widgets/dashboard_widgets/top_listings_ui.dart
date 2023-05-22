@@ -94,6 +94,7 @@ class AllListingsTile extends StatelessWidget {
 
     var list = ds;
     String thisUser = FireAuth.instance.user.uid;
+    int itemCount = ds.length <= 2 ? ds.length : 2;
 
     // var favLists =
     // var name = widget.ds[2]['listing_address'];
@@ -102,13 +103,12 @@ class AllListingsTile extends StatelessWidget {
       shrinkWrap: true,
       // primary: false,
       scrollDirection: Axis.horizontal,
-      itemCount: 2,
+      itemCount: itemCount,
       itemBuilder: (context, index) => InkWell(
         // onTap: list[index].onPress,
         onTap: () {
           Get.to(() => ListingDetail(textTheme), arguments: list[index]);
-
-          print(allListingsBookmarkController.favList);
+          // print(ds.length);
         },
         child: Row(
           children: [

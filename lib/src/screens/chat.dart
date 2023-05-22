@@ -67,6 +67,12 @@ class _ChatPageState extends State<ChatPage> {
     super.initState();
   }
 
+  Future refresh() async {
+    setState(() {
+      getChats();
+    });
+  }
+
   Widget chatRoomsList() {
     return StreamBuilder<QuerySnapshot>(
       stream: chatRoomsStream,
@@ -76,17 +82,20 @@ class _ChatPageState extends State<ChatPage> {
         }
         List<DocumentSnapshot> chatRoomDocs = snapshot.data!.docs;
 
-        return ListView.builder(
-            itemCount: chatRoomDocs.length,
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              DocumentSnapshot ds = snapshot.data!.docs[index];
+        return RefreshIndicator(
+          onRefresh: refresh,
+          child: ListView.builder(
+              itemCount: chatRoomDocs.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                DocumentSnapshot ds = snapshot.data!.docs[index];
 
-              var data = snapshot.data!.docs[index];
+                var data = snapshot.data!.docs[index];
 
-              return ChatRoomListTile(data["lastMessage"], data.id, thisUser,
-                  data['lastMessageSendTs']);
-            });
+                return ChatRoomListTile(data["lastMessage"], data.id, thisUser,
+                    data['lastMessageSendTs']);
+              }),
+        );
 
         // : const Center(child: Text('You don\'t have any messages yet'));
       },
