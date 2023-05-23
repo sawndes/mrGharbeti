@@ -50,7 +50,7 @@ class _LandlordBillsState extends State<LandlordBills> {
     var args = Get.arguments;
 
     return Scaffold(
-      appBar: AppBarUI('Bills', true),
+      appBar: AppBarUI('Bills and Invoices', true),
       // body: const Center(
       //   child: Text('There is no bills added!'),
       // ),

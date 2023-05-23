@@ -161,7 +161,8 @@ class _NotifyUserState extends State<NotifyUser> {
         "title": title,
         "body": body,
         "from": thisUser,
-        "to": widget.rentUid
+        "to": widget.rentUid,
+        "token": token
       };
       if (messageId == "") {
         messageId = randomAlphaNumeric(12);
@@ -247,10 +248,10 @@ class _NotifyUserState extends State<NotifyUser> {
                                 .doc(widget.rentUid)
                                 .get();
                             String token = snap['token'];
-                            print(token);
+
+                            sendPushMessage(token, titleText, bodyText);
                             title.clear();
                             body.clear();
-                            sendPushMessage(token, titleText, bodyText);
                           }
                           // DocumentSnapshot snap = await FirebaseFirestore
                           //     .instance

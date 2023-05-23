@@ -47,6 +47,7 @@ class AppBarUI extends StatelessWidget implements PreferredSizeWidget {
               child: FittedBox(
                 child: Text(
                   Titletext,
+                  // style: TextStyle(color),
                   style: Theme.of(context).textTheme.headline2,
                   overflow: TextOverflow.clip,
                 ),
@@ -54,6 +55,7 @@ class AppBarUI extends StatelessWidget implements PreferredSizeWidget {
             ),
           ],
         ),
+
         actions: [
           Container(
             margin: const EdgeInsets.only(right: 20, top: 7),
@@ -98,6 +100,7 @@ class AppBarUI extends StatelessWidget implements PreferredSizeWidget {
           style: Theme.of(context).textTheme.headline2,
           overflow: TextOverflow.clip,
         ),
+
         actions: [
           Container(
             margin: const EdgeInsets.only(right: 20, top: 7),
